@@ -87,6 +87,17 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
+  .state('tabsController.analyticsChild', {
+    url: '/page13/:childId',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/analytics.child.html',
+        controller: 'analyticsChildCtrl',
+
+      }
+    }
+  })
+
   .state('tabsController', {
     url: '/page1',
     templateUrl: 'templates/tabsController.html',
@@ -173,16 +184,6 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab2': {
         templateUrl: 'templates/settings.html',
         controller: 'settingsCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.NameSAnalytics', {
-    url: '/page13',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/NameSAnalytics.html',
-        controller: 'NameSAnalyticsCtrl'
       }
     }
   })

@@ -1,15 +1,14 @@
-<ion-view title="Analytics " id="page4" class=" ">
-    <ion-content padding="true" class="has-header">
-        <form id="analytics-form9" class="list ">
-            <label class="item item-select " id="analytics-select2">
-                <span class="input-label">Select Child</span>
-                <select>
-                    <option>Mojo</option>
-                    <option>Jimmy</option>
-                    <option>Rory</option>
-                </select>
-            </label>
-        </form>
-        <a ui-sref="tabsController.NameSAnalytics" id="analytics-button15" class=" button button-positive button-small button-block ">View Progress</a>
+<ion-view title="Analytics" id="page4">
+    <ion-header-bar class="bar bar-subheader">
+        <h1 class="title">Select a Child</h1>
+    </ion-header-bar>
+    <ion-content padding="false" class="has-subheader">
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="child in Children" ui-sref="tabsController.analyticsChild({ child: 'child', childId: '{{ child.ChildId }}' })">
+                <img ng-src="{{ child.ChildImgPath }}" />
+                <h2>{{ child.Name }}</h2>
+                <p>Last updated: {{ child.UpdatedAt | date:'medium' }}</p>
+            </a>
+        </div>
     </ion-content>
 </ion-view>

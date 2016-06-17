@@ -68,42 +68,42 @@ angular.module('app.services', [])
     [
         {
             ConversationId: 121,
-            ChildID: 12,
+            ChildId: 12,
             Conversation: "we will take back our lands winter is coming dad",
             ConversationTime: 30000
         },{
             ConversationId: 111,
-            ChildID: 11,
+            ChildId: 11,
             Conversation: "i am very cold yet i still feel the need to go north",
             ConversationTime: 40000
         },{
             ConversationId: 211,
-            ChildID: 21,
+            ChildId: 21,
             Conversation: "i am the greatest hunter oh my god what is that oh just a squirrel i knew that",
             ConversationTime: 150000
         },{
             ConversationId: 221,
-            ChildID: 22,
+            ChildId: 22,
             Conversation: "i don't know what to do i want to follow him but i need to help her",
             ConversationTime: 60000
         },{
             ConversationId: 112,
-            ChildID: 11,
+            ChildId: 11,
             Conversation: "this was a mistake winter is definitely coming",
             ConversationTime: 20000
         },{
             ConversationId: 212,
-            ChildID: 21,
+            ChildId: 21,
             Conversation: "maybe i am a jerk",
             ConversationTime: 10000
         },{
             ConversationId: 213,
-            ChildID: 21,
+            ChildId: 21,
             Conversation: "no everyone adores me that can't be right",
             ConversationTime: 40000
         },{
             ConversationId: 122,
-            ChildID: 12,
+            ChildId: 12,
             Conversation: "i'm not a huge fan of my current situation",
             ConversationTime: 70000
         }
@@ -113,28 +113,28 @@ angular.module('app.services', [])
     [
         {
             AnalyticsId: 29384,
-            ChildID: 11,
+            ChildId: 11,
             TotalWords: 20,
             LongestWords: "definitely",
             ConversationTime: 60000,
             ConversationsLogged: 2
         },{
             AnalyticsId: 28374,
-            ChildID: 21,
+            ChildId: 21,
             TotalWords: 24,
             LongestWords: "greatest",
             ConversationTime: 200000,
             ConversationsLogged: 3
         },{
             AnalyticsId: 85849,
-            ChildID: 12,
+            ChildId: 12,
             TotalWords: 19,
             LongestWords: "situation",
             ConversationTime: 100000,
             ConversationsLogged: 2
         },{
             AnalyticsId: 34832,
-            ChildID: 22,
+            ChildId: 22,
             TotalWords: 13,
             LongestWords: "follow",
             ConversationTime: 60000,
@@ -446,9 +446,9 @@ function deleteChild(childObj){
 Methods for Getting of Children by Known Params
 ******************************************************************************/
 
-this.getChildById = function(childId){
+this.getChildById = function(ChildId){
     for(var child in this.Children){
-        if(child.childId == childId){
+        if(child.ChildId == ChildId){
             return child;
         }
     }
@@ -559,9 +559,9 @@ function setChildsUpdatedAt(childObj, updatedAt){
 Methods for Getting of Analytics by Known Params
 ******************************************************************************/
 
-function getAnalyticsByChildId(childId){
+function getAnalyticsByChildId(ChildId){
   for(analytic in startData.Analytics){
-    if(analytic.ChildID == childId){
+    if(analytic.ChildId == ChildId){
       return analytic;
     }
   }

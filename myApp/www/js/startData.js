@@ -265,13 +265,6 @@ function deleteChild(childObj){
 Methods for Getting of Children by Known Params
 ******************************************************************************/
 
-function getChildById(childId){
-  for(child in Children){
-    if(child.ChildId == childId){
-      return child;
-    }
-  }
-};
 
 function getChildsChildId(childObj){
   for(Child in Children){
@@ -370,18 +363,6 @@ function setChildsUpdatedAt(childObj, updatedAt){
     if(Child === childObj){
       Child.UpdatedAt = updatedAt;
       break;
-    }
-  }
-};
-
-/******************************************************************************
-Methods for Getting of Analytics by Known Params
-******************************************************************************/
-
-function getAnalyticsByChildId(childId){
-  for(analytic in startData.Analytics){
-    if(analytic.ChildID == childId){
-      return analytic;
     }
   }
 };

@@ -5,22 +5,22 @@ angular.module('app.services', [])
     dataBase.Users =
     [
         {
-            id: 1,
+            UserId: 1,
             Name: "Eddard Stark",
             Email: "Eddard.Stark@gmail.com",
-            Username: "EStark",
+            UserName: "EStark",
             Password: "EStark1",
-            UserImgPath: "img/empty-profile.png",
+            ImgPath: "img/empty-profile.png",
             CreatedAt: "2012-04-23T18:25:43.511Z",
             UpdatedAt: "2013-06-14T13:42:43.823Z",
             Enabled: "True"
         },{
-            id: 2,
+            UserId: 2,
             Name: "Cersei Lannister",
             Email: "Cersei.Lannister@gmail.com",
-            Username: "CLannister",
+            UserName: "CLannister",
             Password: "CLannister",
-            UserImgPath: "img/empty-profile.png",
+            ImgPath: "img/empty-profile.png",
             CreatedAt: "2011-01-17T10:01:32.421Z",
             UpdatedAt: "2014-12-11T12:35:26.938Z",
             Enabled: "True"
@@ -34,7 +34,7 @@ angular.module('app.services', [])
             ParentId: 1,
             Name: "John Snow",
             BirthDay: "2012-06-14T00:00:00.000Z",
-            ChildImgPath: "img/empty-profile.png",
+            ImgPath: "img/empty-profile.png",
             CreatedAt: "2014-02-17T17:25:43.514Z",
             UpdatedAt: "2015-07-18T09:23:41.763Z"
         },{
@@ -42,7 +42,7 @@ angular.module('app.services', [])
             ParentId: 2,
             Name: "Joffrey Baratheon",
             BirthDay: "2014-11-23T00:00:00.000Z",
-            ChildImgPath: "img/empty-profile.png",
+            ImgPath: "img/empty-profile.png",
             CreatedAt: "2014-11-28T14:15:43.514Z",
             UpdatedAt: "2015-01-02T12:23:41.763Z"
         },{
@@ -50,7 +50,7 @@ angular.module('app.services', [])
             ParentId: 1,
             Name: "Sansa Stark",
             BirthDay: "2010-04-02T00:00:00.000Z",
-            ChildImgPath: "img/empty-profile.png",
+            ImgPath: "img/empty-profile.png",
             CreatedAt: "2011-03-24T02:14:23.514Z",
             UpdatedAt: "2013-12-18T21:52:42.763Z"
         },{
@@ -58,7 +58,7 @@ angular.module('app.services', [])
             ParentId: 2,
             Name: "Tommen Baratheon",
             BirthDay: "2015-03-24T00:00:00.000Z",
-            ChildImgPath: "img/empty-profile.png",
+            ImgPath: "img/empty-profile.png",
             CreatedAt: "2015-05-11T14:42:43.514Z",
             UpdatedAt: "2015-08-12T16:04:41.763Z"
         }
@@ -142,10 +142,10 @@ angular.module('app.services', [])
         }
     ];
 
-    dataBase.Wordbank = 
+    dataBase.WordBank = 
     [
         {
-            WordbankId: 1234,
+            WordBankId: 1234,
             ChildUse:
             [
               {
@@ -163,7 +163,7 @@ angular.module('app.services', [])
             ],
             Word: "i"
         },{
-            WordbankId: 2342,
+            WordBankId: 2342,
             ChildUse:
             [
               {
@@ -178,392 +178,4 @@ angular.module('app.services', [])
             Word: "am"
         }
     ];
-
-        /******************************************************************************
-Methods for Creating or Deleting User Profiles
-******************************************************************************/
-
-function addNewUser(tempName, userEmail, userName,
-                    UserPassword, ImgPath, UserCreatedAt,
-                    UserUpdatedAt, UserEnabled){
-  var tempId = 1;
-
-  for(User in Users){
-    if(User.id >= tempid){
-      tempid = User.id++;
-    }
-  }
-
-  var obj = {
-    id: tempId,
-    Name: tempName,
-    Email: userEmail,
-    Username: userName,
-    Password: UserPassword,
-    UserImgPath: ImgPath,
-    CreatedAt: UserCreatedAt,
-    UpdatedAt: UserUpdatedAt,
-    Enabled, UserEnabled
-  }
-
-  Users.push(obj);
-};
-
-function deleteUser(userObj){
-  var i = 0;
-  for(User in this.Users){
-    if(User === userObj){
-      Users.splice(i,1);
-      break;
-    }
-    i++;
-  }
-};
-
-/******************************************************************************
-Methods for Getting of User by Known Params
-******************************************************************************/
-
-dataBase.getUserById = function(userId){
-    for(var user in this.Users){
-        if(user.id == userId){
-            return user;
-        }
-    }
-};
-
-function getUserByName(name){
-  for(User in Users){
-    if(User.Name === name){
-      return User;
-    }
-  }
-};
-
-function getUserByEmail(userEmail){
-  for(User in Users){
-    if(User.Email === userEmail){
-      return User;
-    }
-  }
-};
-
-function getUserByUserNameAndPassword(userName, Password){
-  for(User in Users){
-    if(User.Username === userName && User.Password === Password){
-      return User;
-    }
-  }
-};
-
-/******************************************************************************
-Methods for Getting and Setting of User Params
-******************************************************************************/
-
-function getUsersId(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.id;
-    }
-  }
-};
-
-function getUsersName(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.Name;
-    }
-  }
-};
-
-function setUsersName(UserObj, name){
-  for(User in Users){
-      if(User === UserObj){
-        User.Name = name;
-        break;
-      }
-    }
-};
-
-function getUsersEmail(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.Email;
-    }
-  }
-};
-
-function setUsersEmail(UserObj, email){
-  for(User in Users){
-      if(User === UserObj){
-        User.Email = email;
-        break;
-      }
-    }
-};
-
-function getUsersUsername(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.Username;
-    }
-  }
-};
-
-function setUsersUserName(UserObj, name){
-  for(User in Users){
-      if(User === UserObj){
-        User.Username = name;
-        break;
-      }
-    }
-};
-
-function getUsersPassword(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.Password;
-    }
-  }
-};
-
-function setUsersPassword(UserObj, pass){
-  for(User in Users){
-      if(User === UserObj){
-        User.Password = pass;
-        break;
-      }
-    }
-};
-
-function getUsersImagePath(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.UserImgPath;
-    }
-  }
-};
-
-function setUsersImagePath(UserObj, imgPath){
-  for(User in Users){
-      if(User === UserObj){
-        User.UserImgPath = imgPath;
-        break;
-      }
-    }
-};
-
-function getUsersCreatedAt(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.CreatedAt;
-    }
-  }
-};
-
-function setUsersCreatedAt(UserObj, createdAt){
-  for(User in Users){
-      if(User === UserObj){
-        User.CreatedAt = createdAt;
-        break;
-      }
-    }
-};
-
-function getUsersUpdatedAt(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.UpdatedAt;
-    }
-  }
-};
-
-function setUsersUpdatedAt(UserObj, updatedAt){
-  for(User in Users){
-      if(User === UserObj){
-        User.UpdatedAt = updatedAt;
-        break;
-      }
-    }
-};
-
-function getUsersIsEnabled(UserObj){
-  for(User in Users){
-    if(User === UserObj){
-      return User.Enabled;
-    }
-  }
-};
-
-function setUsersIsEnabled(UserObj, enable){
-  for(User in Users){
-      if(User === UserObj){
-        User.Enabled = enable;
-        break;
-      }
-    }
-};
-
-/******************************************************************************
-Methods for Creating or Deleting Childen
-******************************************************************************/
-
-function createChild(ParId, childName, BDay, ImgPath,
-                      Created, Updated){
-  var tempId = 1;
-
-  for(Child in Children){
-    if(Child.ChildId >= tempId){
-      tempId = Child.ChildId++;
-    }
-  }
-
-  var obj = {
-    ChildId: tempId,
-    ParentId: ParId,
-    Name: childName,
-    BirthDay: BDay,
-    ChildImgPath: ImgPath,
-    CreatedAt: Created,
-    UpdatedAt: Updated
-  }
-
-  Children.push(obj);
-};
-
-function deleteChild(childObj){
-  var i = 0;
-  for(Child in Children){
-    if(Child === childObj){
-      Children.splice(i,1);
-      break;
-    }
-    i++;
-  }
-};
-
-/******************************************************************************
-Methods for Getting of Children by Known Params
-******************************************************************************/
-
-this.getChildById = function(ChildId){
-    for(var child in this.Children){
-        if(child.ChildId == ChildId){
-            return child;
-        }
-    }
-};
-
-function getChildsChildId(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.ChildId;
-    }
-  }
-};
-
-function getChildsParentId(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.ParentId;
-    }
-  }
-};
-
-function getChildsName(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.Name;
-    }
-  }
-};
-
-function setChildsName(childObj, name){
-  for(Child in Children){
-    if(Child === childObj){
-      Child.Name = name;
-      break;
-    }
-  }
-};
-
-function getChildsBirthDay(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.BirthDay;
-    }
-  }
-};
-
-function setChildsBirthDay(childObj, Bday){
-  for(Child in Children){
-    if(Child === childObj){
-      Child.BirthDay = Bday;
-      break;
-    }
-  }
-};
-
-function getChildsImgPath(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.ChildImgPath;
-    }
-  }
-};
-
-function setChildsImgPath(childObj, ImgPath){
-  for(Child in Children){
-    if(Child === childObj){
-      Child.ChildImgPath = ImgPath;
-      break;
-    }
-  }
-};
-
-function getChildsCreatedAt(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.CreatedAt;
-    }
-  }
-};
-
-function setChildsCreatedAt(childObj, createdAt){
-  for(Child in Children){
-    if(Child === childObj){
-      Child.CreatedAt = createdAt;
-      break;
-    }
-  }
-};
-
-function getChildsUpdatedAt(childObj){
-  for(Child in Children){
-    if(Child === childObj){
-      return Child.UpdatedAt;
-    }
-  }
-};
-
-function setChildsUpdatedAt(childObj, updatedAt){
-  for(Child in Children){
-    if(Child === childObj){
-      Child.UpdatedAt = updatedAt;
-      break;
-    }
-  }
-};
-
-/******************************************************************************
-Methods for Getting of Analytics by Known Params
-******************************************************************************/
-
-function getAnalyticsByChildId(ChildId){
-  for(analytic in startData.Analytics){
-    if(analytic.ChildId == ChildId){
-      return analytic;
-    }
-  }
-};
 });

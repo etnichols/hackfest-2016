@@ -4,7 +4,7 @@
     </ion-header-bar>
     <ion-content padding="false" class="has-subheader">
         <div class="list">
-            <a class="item item-avatar" ng-repeat="child in Children" ui-sref="tabsController.analyticsChild({ childId: '{{ child.ChildId }}' })">
+            <a class="item item-avatar" ng-repeat="child in children" ui-sref="tabsController.analyticsChild({ childId: '{{ child.ChildId }}' })">
                 <img ng-src="{{ child.ImgPath }}" />
                 <h2>{{ child.Name }}</h2>
                 <p>Last updated: {{ child.UpdatedAt | date:'medium' }}</p>

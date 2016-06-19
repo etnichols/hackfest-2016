@@ -1,64 +1,152 @@
 angular.module('app.controllers', [])
 
-.controller('NameSConversationsCtrl', function ($scope) {
+.controller('NameSConversationsCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-.controller('startAConversationCtrl', function ($scope) {
+.controller('startAConversationCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-.controller('conversationStartedCtrl', function ($scope) {
+.controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-.controller('conversationEndedCtrl', function ($scope) {
+.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-.controller('conversationSavedCtrl', function ($scope) {
+.controller('conversationSavedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-// TODO: Need to limit the controller to accept a userId based on the logged in user
-// -- Also need to limit the children available to the user
-.controller('analyticsCtrl', function ($scope, dataBase) {
-    $scope.Users = dataBase.Users;
-    $scope.Children = dataBase.Children;
+.controller('analyticsCtrl', function ($scope, dataBase, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+        $scope.user = $rootScope.user;
+        $scope.children = getChildren(dataBase, $scope.user.UserId);
+    }
 })
 
-.controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams) {
-    $scope.child = getChildById(dataBase.Children, $stateParams.childId);
-    $scope.analytics = getAnalyticsByChildId(dataBase.Analytics, $stateParams.childId);
+.controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+        $scope.child = getChildById(dataBase.Children, $stateParams.childId);
+        $scope.analytics = getAnalyticsByChildId(dataBase.Analytics, $stateParams.childId);
+
+        // Make sure there's data to show
+        if($scope.analytics == null || $scope.child == null) {
+            $state.go("tabsController.analytics");
+        }
+    }
 })
 
-.controller('loginCtrl', function ($scope) {
+.controller('loginCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup, $timeout) {
+    $scope.login = function(user) {
+        var usr = getUserByLogin(dataBase.Users, user.userName, user.password);
 
+        // If a match was found, enter the application, otherwise, alert invalid
+        if(usr != null) {
+            $rootScope.user = usr;
+            $state.go("tabsController.startAConversation");
+        }
+        else {
+            $scope.showInvalidCredentials();
+        }
+    }
+
+    $scope.showInvalidCredentials = function() {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Invalid username/password',
+            template: 'Please try again.'
+        });
+
+        $timeout(function() {
+            alertPopup.close(); //close the popup after 3 seconds for some reason
+        }, 3000);
+    };
 })
 
-.controller('signupCtrl', function ($scope) {
+.controller('signupCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup) {
+    $scope.register = function(user) {
+        // Confirm no user with input userName or email exists
+        if(!getUserByUserName(dataBase.Users, user.userName)) {
+            if(!getUserByEmail(dataBase.Users, user.email)) {
+                $rootScope.user = addUser(dataBase.Users, user.name, user.email, user.userName, user.password, "", true);
+                $state.go("login");
+            }
+            else {
+                $scope.showInvalidEmail();
+            }
+        }
+        else {
+            $scope.showInvalidUserName();
+        }
+    }
 
+    $scope.showInvalidUserName = function() {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Username in use',
+            template: 'That username unavailable, please try again with a different one.'
+        });
+    };
+
+    $scope.showInvalidEmail = function() {
+        var alertPopup = $ionicPopup.alert({
+            title: 'Email in use',
+            template: 'That email address is already registered. Please login or try again with a different one.'
+        });
+    };
 })
 
-.controller('myCollectionsCtrl', function ($scope) {
+.controller('myCollectionsCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-.controller('addChildCtrl', function ($scope) {
+.controller('addChildCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 })
 
-.controller('settingsCtrl', function ($scope) {
-
+.controller('settingsCtrl', function ($scope, $rootScope, $state, $ionicHistory) {
+    if(validateUser($rootScope, $state)) {
+        $scope.logout = function() {
+            $ionicHistory.clearHistory();
+            $rootScope.user = null;
+            $state.go("login");
+        }
+    }
 })
 
-.controller('ConversationTitleCtrl', function ($scope) {
+.controller('ConversationTitleCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
 
+    }
 });
+
+function validateUser($rootScope, $state) {
+    if($rootScope.user == null) {
+        $state.go("login");
+        return false;
+    }
+
+    return true;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//   Database API (order: users, children, conversations, analytics wordbank)
+//   Database API (order: users, children, conversations, analytics, wordbank)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -97,6 +185,24 @@ function addUser(users, name, email, userName, password, imgPath, enabled) {
     };
 
     users.push(usr);
+    return usr;
+}
+
+/**
+ * Returns a user's children from the database
+ * @param  dataBase - the dataBase JSON object
+ * @param  userId   - the userId of the deleted user
+ */
+function getChildren(dataBase, userId) {
+    var children = [];
+
+    dataBase.Children.some(function (child) {
+        if(child.ParentId == userId) {
+            children.push(child);
+        }
+    });
+
+    return children;
 }
 
 /**
@@ -130,7 +236,7 @@ function deleteChildren(dataBase, userId) {
 }
 
 /**
- * Removes a children's analytic object from the database
+ * Removes a child's analytic object from the database
  * @param  dataBase - the dataBase JSON object
  * @param  childId  - the childId of the deleted child
  */
@@ -144,7 +250,7 @@ function deleteAnalytics(dataBase, childId) {
 }
 
 /**
- * Removes a children's wordbank objects from the database
+ * Removes a child's wordbank objects from the database
  * @param  dataBase - the dataBase JSON object
  * @param  childId  - the childId of the deleted child
  */
@@ -165,7 +271,7 @@ function deleteWordBank(dataBase, childId) {
 }
 
 /**
- * Removes a children's conversation objects from the database
+ * Removes a child's conversation objects from the database
  * @param  dataBase - the dataBase JSON object
  * @param  childId  - the childId of the deleted child
  */
@@ -187,6 +293,23 @@ function getUserById(users, userId) {
 
     users.some(function (user) {
         if(user.UserId == userId) {
+            usr = user;
+            return true;
+        }
+    });
+    return usr;
+}
+
+/**
+ * Returns a user object based off of their UserName, if they exist
+ * @param  users    - the users JSON object in the database service
+ * @param  userName - the userName of the user to be retrieved 
+ */
+function getUserByUserName(users, userName) {
+    var usr = null;
+
+    users.some(function (user) {
+        if(user.UserName == userName) {
             usr = user;
             return true;
         }

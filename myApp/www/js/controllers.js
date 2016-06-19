@@ -1,53 +1,10 @@
 angular.module('app.controllers', [])
 
-.controller('NameSConversationsCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('startAConversationCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationSavedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('analyticsCtrl', function ($scope, dataBase, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-        $scope.user = $rootScope.user;
-        $scope.children = getChildren(dataBase, $scope.user.UserId);
-    }
-})
-
-.controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-        $scope.child = getChildById(dataBase.Children, $stateParams.childId);
-        $scope.analytics = getAnalyticsByChildId(dataBase.Analytics, $stateParams.childId);
-
-        // Make sure there's data to show
-        if($scope.analytics == null || $scope.child == null) {
-            $state.go("tabsController.analytics");
-        }
-    }
-})
+////////////////////////////////////////////////////////////////////////////////
+//
+//   User login/signup/settings controllers
+//
+////////////////////////////////////////////////////////////////////////////////
 
 .controller('loginCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup, $timeout) {
     $scope.login = function(user) {
@@ -56,6 +13,11 @@ angular.module('app.controllers', [])
         // If a match was found, enter the application, otherwise, alert invalid
         if(usr != null) {
             $rootScope.user = usr;
+
+            // Clear the input fields
+            $("#login-username-field, #login-password-field").val("");
+
+            $rootScope.$emit("login");
             $state.go("tabsController.startAConversation");
         }
         else {
@@ -107,18 +69,6 @@ angular.module('app.controllers', [])
     };
 })
 
-.controller('myCollectionsCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('addChildCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
 .controller('settingsCtrl', function ($scope, $rootScope, $state, $ionicHistory) {
     if(validateUser($rootScope, $state)) {
         $scope.logout = function() {
@@ -129,12 +79,96 @@ angular.module('app.controllers', [])
     }
 })
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Conversations controllers
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.controller('NameSConversationsCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('startAConversationCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
 .controller('ConversationTitleCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('conversationSavedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Analytics Controllers
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.controller('analyticsCtrl', function ($scope, dataBase, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+        $scope.user = $rootScope.user;
+        $scope.children = getChildren(dataBase, $scope.user.UserId);
+
+        $rootScope.$on("login", function() {
+            $scope.user = $rootScope.user;
+            $scope.children = getChildren(dataBase, $scope.user.UserId);
+        });
+    }
+})
+
+.controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+        $scope.child = getChildById(dataBase.Children, $stateParams.childId);
+        $scope.analytics = getAnalyticsByChildId(dataBase.Analytics, $stateParams.childId);
+
+        // Make sure there's data to show
+        if($scope.analytics == null || $scope.child == null) {
+            $state.go("tabsController.analytics");
+        }
+    }
+})
+
+.controller('myCollectionsCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('addChildCtrl', function ($scope, $rootScope, $state) {
     if(validateUser($rootScope, $state)) {
 
     }
 });
 
+/**
+ * Determines whether or not a valid user has logged into the application
+ * @param  $rootScope - the angular rootScope object
+ * @param  $state     - the angular state object
+ * @return            - true if the rootScope.user object is not null
+ */
 function validateUser($rootScope, $state) {
     if($rootScope.user == null) {
         $state.go("login");

@@ -1,0 +1,17 @@
+<ion-view title="{{ child.Name }}'s Analytics " id="{{ child.ChildId }}">
+    <ion-content padding="true" class="has-header">
+        <ion-list id="NameSAnalytics-list9">
+            <ion-item id="NameSAnalytics-list-item24">Longest Word Spoken:
+                <span class="item-note">{{ analytics.LongestWords }}</span>
+            </ion-item>
+            <ion-item id="NameSAnalytics-list-item25">*Visualizations Here*</ion-item>
+            <ion-item id="NameSAnalytics-list-item26">Total Conversations:
+                <span class="item-note">{{ analytics.ConversationsLogged }}</span>
+            </ion-item>
+            <ion-item id="NameSAnalytics-list-item26">Total Conversation Time:
+                <span class="item-note">{{ analytics.ConversationTime }}</span>
+            </ion-item>
+        </ion-list>
+        <a ui-sref="tabsController.analytics" id="NameSAnalytics-button16" class=" button button-positive button-small button-block "> Back to Children</a>
+    </ion-content>
+</ion-view>

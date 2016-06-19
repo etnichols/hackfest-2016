@@ -21,3 +21,8 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
     }
   });
 })
+
+.run(function($rootScope, $state) {
+    $rootScope.user = null;
+    $state.go("login");
+})

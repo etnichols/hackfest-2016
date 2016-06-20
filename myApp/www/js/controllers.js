@@ -103,9 +103,13 @@ angular.module('app.controllers', [])
     }
 })
 
+//EN - MICROPHONE ACCESS INSTANTIATED HERE.
 .controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
     if(validateUser($rootScope, $state)) {
-
+        console.log("Validated Users HERE!");
+    }
+    function onRecordPress(){
+        console.log("Pressed button");
     }
 })
 
@@ -218,11 +222,11 @@ function validateUser($rootScope, $state) {
 
 /**
  * Adds a new user to the database
- * @param users    - the users JSON object in the database service 
+ * @param users    - the users JSON object in the database service
  * @param name     - the name of the user to add
  * @param email    - the email of the user to add
  * @param userName - the username of the user to add
- * @param password - the password of the user to add 
+ * @param password - the password of the user to add
  *                   TODO: Hash the password in this function or beforehand
  * @param imgPath  - the path to the profile image of the user to add
  * @param enabled  - the state of the users account, true if access is allowed
@@ -230,14 +234,14 @@ function validateUser($rootScope, $state) {
 function addUser(users, name, email, userName, password, imgPath, enabled) {
     var now = new Date();
     var tempId = 1;
-    
+
     users.some(function (user) {
         if (user.UserId >= tempId) {
             tempId = user.UserId + 1;
         }
     });
 
-    var usr = 
+    var usr =
     {
         UserId: tempId,
         Name: name,
@@ -352,7 +356,7 @@ function deleteConversations(dataBase, childId) {
 /**
  * Returns a user object based off of their UserId, if they exist
  * @param  users  - the users JSON object in the database service
- * @param  userId - the userId of the user to be retrieved 
+ * @param  userId - the userId of the user to be retrieved
  */
 function getUserById(users, userId) {
     var usr = null;
@@ -369,7 +373,7 @@ function getUserById(users, userId) {
 /**
  * Returns a user object based off of their UserName, if they exist
  * @param  users    - the users JSON object in the database service
- * @param  userName - the userName of the user to be retrieved 
+ * @param  userName - the userName of the user to be retrieved
  */
 function getUserByUserName(users, userName) {
     var usr = null;
@@ -429,14 +433,14 @@ function getUserByLogin(users, userName, password) {
 function addChild(children, userId, name, birthDay, imgPath) {
     var now = new Date();
     var tempId = 1;
-    
+
     children.some(function (child) {
         if (child.ChildId >= tempId) {
             tempId = child.ChildId + 1;
         }
     });
 
-    var chld = 
+    var chld =
     {
         ChildId: tempId,
         ParentId: userId,
@@ -507,3 +511,9 @@ function getAnalyticsByChildId(analytics, childId) {
     });
     return analyticsObj;
 }
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Audio Recording Controllers
+//
+////////////////////////////////////////////////////////////////////////////////

@@ -18,8 +18,8 @@ angular.module('app.services', [])
             UserId: 2,
             Name: "Cersei Lannister",
             Email: "Cersei.Lannister@gmail.com",
-            UserName: "CLannister",
-            Password: "CLannister",
+            UserName: "c",
+            Password: "c",
             ImgPath: "img/empty-profile.png",
             CreatedAt: "2011-01-17T10:01:32.421Z",
             UpdatedAt: "2014-12-11T12:35:26.938Z",
@@ -34,7 +34,7 @@ angular.module('app.services', [])
             ParentId: 1,
             Name: "John Snow",
             BirthDay: "2012-06-14T00:00:00.000Z",
-            ImgPath: "img/empty-profile.png",
+            ImgPath: "img/john-snow-profile.jpg",
             CreatedAt: "2014-02-17T17:25:43.514Z",
             UpdatedAt: "2015-07-18T09:23:41.763Z"
         },{
@@ -42,7 +42,7 @@ angular.module('app.services', [])
             ParentId: 2,
             Name: "Joffrey Baratheon",
             BirthDay: "2014-11-23T00:00:00.000Z",
-            ImgPath: "img/empty-profile.png",
+            ImgPath: "img/joffrey-profile.jpg",
             CreatedAt: "2014-11-28T14:15:43.514Z",
             UpdatedAt: "2015-01-02T12:23:41.763Z"
         },{
@@ -50,7 +50,7 @@ angular.module('app.services', [])
             ParentId: 1,
             Name: "Sansa Stark",
             BirthDay: "2010-04-02T00:00:00.000Z",
-            ImgPath: "img/empty-profile.png",
+            ImgPath: "img/sansa-profile.jpg",
             CreatedAt: "2011-03-24T02:14:23.514Z",
             UpdatedAt: "2013-12-18T21:52:42.763Z"
         },{
@@ -58,7 +58,7 @@ angular.module('app.services', [])
             ParentId: 2,
             Name: "Tommen Baratheon",
             BirthDay: "2015-03-24T00:00:00.000Z",
-            ImgPath: "img/empty-profile.png",
+            ImgPath: "img/tommen-profile.jpg",
             CreatedAt: "2015-05-11T14:42:43.514Z",
             UpdatedAt: "2015-08-12T16:04:41.763Z"
         }
@@ -145,37 +145,743 @@ angular.module('app.services', [])
     dataBase.WordBank = 
     [
         {
-            WordBankId: 1234,
+            WordBankId: 1,
             ChildUse:
             [
               {
-                id: 11,
-                Count: 2
-              },
-              {
-                id: 21,
-                Count: 3
-              },
-              {
-                id: 22,
-                Count: 3
+                ChildId: 11,
+                Count: 2,
+                Created: "2015-07-10"
+              },{
+                ChildId: 21,
+                Count: 3,
+                Created: "2015-07-10"
+              },{
+                ChildId: 22,
+                Count: 4,
+                Created: "2015-07-10"
               }
             ],
-            Word: "i"
+            Word: "I"
         },{
-            WordBankId: 2342,
+            WordBankId: 2,
             ChildUse:
             [
               {
-                id: 11,
-                Count: 1
-              },
-              {
-                id: 21,
-                Count: 2
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 21,
+                Count: 2,
+                Created: "2015-07-10"
               }
             ],
             Word: "am"
+        },{
+            WordBankId: 3,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "very"
+        },{
+            WordBankId: 4,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "still"
+        },{
+            WordBankId: 5,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "we"
+        },{
+            WordBankId: 6,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "will"
+        },{
+            WordBankId: 7,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "take"
+        },{
+            WordBankId: 8,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "back"
+        },{
+            WordBankId: 9,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "our"
+        },{
+            WordBankId: 10,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "lands"
+        },{
+            WordBankId: 11,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "winter"
+        },{
+            WordBankId: 12,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "is"
+        },{
+            WordBankId: 13,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "coming"
+        },{
+            WordBankId: 14,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "dad"
+        },{
+            WordBankId: 15,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "cold"
+        },{
+            WordBankId: 16,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "yet"
+        },{
+            WordBankId: 17,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "feel"
+        },{
+            WordBankId: 18,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "the"
+        },{
+            WordBankId: 19,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "need"
+        },{
+            WordBankId: 20,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 22,
+                Count: 3,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "to"
+        },{
+            WordBankId: 21,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "go"
+        },{
+            WordBankId: 22,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "north"
+        },{
+            WordBankId: 23,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "greatest"
+        },{
+            WordBankId: 24,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "hunter"
+        },{
+            WordBankId: 25,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 2,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "oh"
+        },{
+            WordBankId: 26,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "my"
+        },{
+            WordBankId: 27,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "god"
+        },{
+            WordBankId: 28,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "what"
+        },{
+            WordBankId: 29,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 3,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "that"
+        },{
+            WordBankId: 30,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "just"
+        },{
+            WordBankId: 31,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              },{
+                ChildId: 21,
+                Count: 2,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "a"
+        },{
+            WordBankId: 32,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "squirrel"
+        },{
+            WordBankId: 33,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "knew"
+        },{
+            WordBankId: 34,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "don't"
+        },{
+            WordBankId: 35,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "know"
+        },{
+            WordBankId: 36,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "do"
+        },{
+            WordBankId: 37,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "want"
+        },{
+            WordBankId: 38,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "follow"
+        },{
+            WordBankId: 39,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "him"
+        },{
+            WordBankId: 40,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "but"
+        },{
+            WordBankId: 41,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "help"
+        },{
+            WordBankId: 42,
+            ChildUse:
+            [
+              {
+                ChildId: 22,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "her"
+        },{
+            WordBankId: 43,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "this"
+        },{
+            WordBankId: 44,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "was"
+        },{
+            WordBankId: 45,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "mistake"
+        },{
+            WordBankId: 46,
+            ChildUse:
+            [
+              {
+                ChildId: 11,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "definitely"
+        },{
+            WordBankId: 47,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "maybe"
+        },{
+            WordBankId: 48,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "jerk"
+        },{
+            WordBankId: 49,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "no"
+        },{
+            WordBankId: 50,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "everyone"
+        },{
+            WordBankId: 51,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "adores"
+        },{
+            WordBankId: 52,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "me"
+        },{
+            WordBankId: 53,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "can't"
+        },{
+            WordBankId: 54,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "be"
+        },{
+            WordBankId: 55,
+            ChildUse:
+            [
+              {
+                ChildId: 21,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "right"
+        },{
+            WordBankId: 56,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "I'm"
+        },{
+            WordBankId: 57,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "not"
+        },{
+            WordBankId: 58,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "huge"
+        },{
+            WordBankId: 59,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "fan"
+        },{
+            WordBankId: 60,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "of"
+        },{
+            WordBankId: 61,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "current"
+        },{
+            WordBankId: 62,
+            ChildUse:
+            [
+              {
+                ChildId: 12,
+                Count: 1,
+                Created: "2015-07-10"
+              }
+            ],
+            Word: "situation"
         }
     ];
 });

@@ -1,22 +1,20 @@
 <ion-view title="Login" id="page6" class=" ">
-  <div class="spacer" style="width: 300px; height: 70px;"></div>
-
-  <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()">Login with Facebook</a>
-    <!--<ion-content padding="true" class="has-header">
-        <form id="login-form3" class="list ">
+    <ion-content padding="true" class="has-header">
+        <form id="login-form3" class="list" ng-submit="login(user)">
             <ion-list id="login-list3" class=" ">
                 <label class="item item-input " id="login-input3">
                     <span class="input-label">Username</span>
-                    <input type="text" placeholder="">
+                    <input type="text" placeholder="" id="login-username-field" required ng-model="user.userName">
                 </label>
                 <label class="item item-input " id="login-input4">
                     <span class="input-label">Password</span>
-                    <input type="password" placeholder="">
+                    <input type="password" placeholder="" id="login-password-field" required ng-model="user.password">
                 </label>
             </ion-list>
             <div class="spacer" style="width: 300px; height: 11px;"></div>
-            <a ui-sref="tabsController.startAConversation" id="login-button5" class=" button button-stable  button-block ">Log in</a>
-            <a ui-sref="tabsController.signup" id="login-button6" class=" button button-positive  button-block button-clear ">Or create an account</a>
+            <input type="submit" class="button button-positive button-block" value="Log in" id="login-button5">
+            <a ui-sref="signup" id="login-button6" class=" button button-positive  button-block button-clear ">Or create an account</a>
         </form>
-    </ion-content> -->
+        <a class="facebook-sign-in button button-block" ng-click="facebookSignIn()">Login with Facebook</a>
+    </ion-content>
 </ion-view>

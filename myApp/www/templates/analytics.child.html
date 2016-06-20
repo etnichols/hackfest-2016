@@ -1,0 +1,30 @@
+<ion-view title="{{ child.Name }}'s Analytics " id="{{ child.ChildId }}">
+    <ion-content padding="true" class="has-header">
+        <ion-list id="NameSAnalytics-list9">
+            <ion-item>Total Unique Words Spoken:
+                <span class="item-note">{{ analytics.TotalWords }}</span>
+            </ion-item>
+
+            <ion-item>Longest Word Spoken:
+                <span class="item-note">{{ analytics.LongestWords }}</span>
+            </ion-item>
+
+            <!-- Visuals -->
+            <div class="card">
+                <div class="item item-divider">
+                    Words learned over time
+                </div>
+                <div class="item item-text-wrap">
+                    <canvas id="line" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-legend="true" chart-series="series" options="{showTooltips: false}"></canvas>
+                </div>
+            </div>
+
+            <ion-item>Total Conversations:
+                <span class="item-note">{{ analytics.ConversationsLogged }}</span>
+            </ion-item>
+            <ion-item>Total Conversation Time:
+                <span class="item-note">{{ analytics.ConversationTime }}</span>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

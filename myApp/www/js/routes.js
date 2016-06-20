@@ -87,30 +87,33 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
+  .state('tabsController.analyticsChild', {
+    url: '/page13/:childId',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/analytics.child.html',
+        controller: 'analyticsChildCtrl',
+
+      }
+    }
+  })
+
   .state('tabsController', {
     url: '/page1',
     templateUrl: 'templates/tabsController.html',
     abstract:true
   })
 
-  .state('tabsController.login', {
-    url: '/page6',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
-      }
-    }
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'loginCtrl'
   })
 
-  .state('tabsController.signup', {
-    url: '/page7',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/signup.html',
-        controller: 'signupCtrl'
-      }
-    }
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'signupCtrl'
   })
 
   /* 
@@ -177,16 +180,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.NameSAnalytics', {
-    url: '/page13',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/NameSAnalytics.html',
-        controller: 'NameSAnalyticsCtrl'
-      }
-    }
-  })
-
   /* 
     The IonicUIRouter.js UI-Router Modification is being used for this route.
     To navigate to this route, do NOT use a URL. Instead use one of the following:
@@ -215,7 +208,4 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
 $urlRouterProvider.otherwise('/page1/page3')
-
-  
-
 });

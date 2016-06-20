@@ -20,6 +20,10 @@
     margin: 10% 25% 10% 25%;
 }
 
+input {
+  width: 100%;
+}
+
 /*body {
   cursor: url('http://ionicframework.com/img/finger.png'), auto;
 }

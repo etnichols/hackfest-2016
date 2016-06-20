@@ -1,61 +1,23 @@
 angular.module('app.controllers', [])
 
-.controller('NameSConversationsCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
+////////////////////////////////////////////////////////////////////////////////
+//
+//   User login/signup/settings controllers
+//
+////////////////////////////////////////////////////////////////////////////////
 
-    }
-})
-
-.controller('startAConversationCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationSavedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('analyticsCtrl', function ($scope, dataBase, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-        $scope.user = $rootScope.user;
-        $scope.children = getChildren(dataBase, $scope.user.UserId);
-    }
-})
-
-.controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-        $scope.child = getChildById(dataBase.Children, $stateParams.childId);
-        $scope.analytics = getAnalyticsByChildId(dataBase.Analytics, $stateParams.childId);
-
-        // Make sure there's data to show
-        if($scope.analytics == null || $scope.child == null) {
-            $state.go("tabsController.analytics");
-        }
-    }
-})
-
-.controller('loginCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup, $timeout) {
+.controller('loginCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup, $ionicHistory, $timeout) {
     $scope.login = function(user) {
         var usr = getUserByLogin(dataBase.Users, user.userName, user.password);
 
         // If a match was found, enter the application, otherwise, alert invalid
         if(usr != null) {
             $rootScope.user = usr;
+
+            // Clear the input fields
+            $("#login-username-field, #login-password-field").val("");
+
+            $ionicHistory.clearHistory();
             $state.go("tabsController.startAConversation");
         }
         else {
@@ -107,6 +69,58 @@ angular.module('app.controllers', [])
     };
 })
 
+.controller('settingsCtrl', function ($scope, $rootScope, $state, $ionicHistory) {
+    if(validateUser($rootScope, $state)) {
+        $scope.logout = function() {
+            $ionicHistory.clearHistory();
+            $rootScope.user = null;
+            $state.go("login");
+        }
+    }
+})
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Conversations controllers
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.controller('NameSConversationsCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('startAConversationCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('ConversationTitleCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+.controller('conversationSavedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
 .controller('myCollectionsCtrl', function ($scope, $rootScope, $state) {
     if(validateUser($rootScope, $state)) {
 
@@ -119,22 +133,74 @@ angular.module('app.controllers', [])
     }
 })
 
-.controller('settingsCtrl', function ($scope, $rootScope, $state, $ionicHistory) {
-    if(validateUser($rootScope, $state)) {
-        $scope.logout = function() {
-            $ionicHistory.clearHistory();
-            $rootScope.user = null;
-            $state.go("login");
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Analytics Controllers
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.controller('analyticsCtrl', function ($scope, dataBase, $rootScope, $state) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $scope.user = $rootScope.user;
+            $scope.children = getChildren(dataBase, $scope.user.UserId);
         }
-    }
+    });
 })
 
-.controller('ConversationTitleCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
+.controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $scope.child = getChildById(dataBase.Children, $stateParams.childId);
+            $scope.analytics = getAnalyticsByChildId(dataBase.Analytics, $stateParams.childId);
 
-    }
+            // Make sure there's data to show
+            if($scope.analytics == null || $scope.child == null) {
+                $state.go("tabsController.analytics");
+            }
+
+            // Calculate chart data
+            var labels = [];
+            var data = [];
+
+            var yearStart = 2011;
+            var dataSize = 6;
+
+            for(var i = 0; i < dataSize; i++) {
+                labels.push(yearStart + i);
+                data.push(0);
+            }
+
+            // Performance hindering function (parse whole wordbank)
+            // TODO: Get mySQL running
+            dataBase.WordBank.some(function (word) {
+                // Check if this child has spoken this word
+                word.ChildUse.some(function (child) {
+                    // Child has spoken this word
+                    if(child.ChildId == $scope.child.ChildId) {
+                        var dateLearned = new Date(child.Created);
+                        var yearLearned = dateLearned.getFullYear();
+
+                        if(yearLearned >= yearStart && yearLearned <= yearStart + dataSize) {
+                            data[yearLearned - yearStart]++;
+                        }
+                        return true;
+                    }
+                });
+            });
+
+            $scope.labels = labels;
+            $scope.data = [data];
+        }
+    });
 });
 
+/**
+ * Determines whether or not a valid user has logged into the application
+ * @param  $rootScope - the angular rootScope object
+ * @param  $state     - the angular state object
+ * @return            - true if the rootScope.user object is not null
+ */
 function validateUser($rootScope, $state) {
     if($rootScope.user == null) {
         $state.go("login");

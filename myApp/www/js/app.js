@@ -1,6 +1,7 @@
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'chart.js'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'chart.js', 'ngOpenFB'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, ngFB) {
+  ngFB.init({appId: '502573359927881'});
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)

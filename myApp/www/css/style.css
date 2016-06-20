@@ -173,6 +173,12 @@ button.button-icon.round-overlay-button {
   }
 }*/
 
+a.item-avatar:hover, a.item-avatar:hover > h2,
+a.item-avatar:hover > p {
+  background-color: #0066ff;
+  color: white;
+}
+
 .platform-ios .manual-ios-statusbar-padding{
     padding-top:20px;
 }

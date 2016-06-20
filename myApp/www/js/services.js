@@ -10,7 +10,6 @@ angular.module('app.services', [])
             Email: "Eddard.Stark@gmail.com",
             UserName: "EStark",
             Password: "EStark1",
-            ImgPath: "img/empty-profile.png",
             CreatedAt: "2012-04-23T18:25:43.511Z",
             UpdatedAt: "2013-06-14T13:42:43.823Z",
             Enabled: "True"
@@ -20,7 +19,6 @@ angular.module('app.services', [])
             Email: "Cersei.Lannister@gmail.com",
             UserName: "c",
             Password: "c",
-            ImgPath: "img/empty-profile.png",
             CreatedAt: "2011-01-17T10:01:32.421Z",
             UpdatedAt: "2014-12-11T12:35:26.938Z",
             Enabled: "True"

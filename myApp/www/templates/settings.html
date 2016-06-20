@@ -1,5 +1,23 @@
 <ion-view title="Settings" id="page12" class=" ">
     <ion-content padding="true" class="has-header">
-        <a ng-click="logout()" id="settings-button31" class=" button button-positive button-small button-block ">Logout</a>
+        <form id="settingsForm">
+            <div class="list">
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Name</span>
+                    <input type="text" placeholder="{{ user.Name }}" id="settingsName" ng-model="settings.Name">
+                </label>
+                <label class="item item-input item-stacked-label">
+                    <span class="input-label">Email</span>
+                    <input type="text" placeholder="{{ user.Email }}" id="settingsEmail" ng-model="settings.Email">
+                </label>
+                <label class="item item-input item-stacked-label" ng-click="changePassword()"]>
+                    <span class="input-label">Password</span>
+                    <p>Click to change password</p>
+                </label>
+            </div>
+        </form>
+        <a ng-click="saveChanges(settings)" class="button button-positive button-small button-block" id="settingsSaveButton" disabled>Save Changes</a>
+        <a ng-click="cancel()" class="button button-stable button-small button-block">Cancel</a>
+        <a ng-click="logout()" class=" button button-assertive button-footer button-small button-block ">Logout</a>
     </ion-content>
 </ion-view>

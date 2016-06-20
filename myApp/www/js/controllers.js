@@ -7,8 +7,6 @@ angular.module('app.controllers', ['ngOpenFB'])
 ////////////////////////////////////////////////////////////////////////////////
 
 .controller('loginCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup, $ionicHistory, $timeout, ngFB) {
-
-
     $scope.login = function(user) {
         var usr = getUserByLogin(dataBase.Users, user.userName, user.password);
 
@@ -84,14 +82,75 @@ angular.module('app.controllers', ['ngOpenFB'])
     };
 })
 
-.controller('settingsCtrl', function ($scope, $rootScope, $state, $ionicHistory) {
+.controller('settingsCtrl', function ($scope, dataBase, $rootScope, $state, $ionicHistory, $ionicPopup) {
     if(validateUser($rootScope, $state)) {
+        $scope.user = $rootScope.user;
+        $scope.settings = {};
+
         $scope.logout = function() {
             $ionicHistory.clearHistory();
             $rootScope.user = null;
             $state.go("login");
         }
+
+        $scope.cancel = function() {
+            $ionicHistory.goBack();
+        }
+
+        $scope.changePassword = function() {
+            // An elaborate, custom popup
+            var passwordPopup = $ionicPopup.show({
+                template: '<input type="password" ng-model="settings.password">',
+                title: 'Change password',
+                subTitle: 'Please enter your new password',
+                scope: $scope,
+                buttons: [
+                    { text: 'Cancel' },
+                    {
+                        text: '<b>Save</b>',
+                        type: 'button-positive',
+                        onTap: function(e) {
+                            if (!$scope.settings.password) {
+                                //don't allow the user to close unless he enters wifi password
+                                e.preventDefault();
+                            } else {
+                                $scope.user.Password = $scope.settings.password;
+                                $scope.showAlert("Password updated!");
+                            }
+                        }
+                    }
+                ]
+            });
+
+            passwordPopup.then(function(res) {
+            });
+        };
+
+        $scope.saveChanges = function() {
+            if($scope.settings.Name) {
+                $scope.user.Name = $scope.settings.Name;
+            }
+            if($scope.settings.Email) {
+                $scope.user.Email = $scope.settings.Email;
+            }
+
+            $scope.showAlert("Information updated!");
+        }
+
+        $scope.showAlert = function(title) {
+            var alertPopup = $ionicPopup.alert({
+                title: title
+            });
+
+            alertPopup.then(function(res) {
+                $ionicHistory.goBack();
+            });
+        }
     }
+
+    $("#settingsName, #settingsEmail").on("input", function() {
+        $("#settingsSaveButton").removeAttr("disabled");
+    });
 })
 
 ////////////////////////////////////////////////////////////////////////////////

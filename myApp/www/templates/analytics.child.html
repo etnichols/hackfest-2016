@@ -23,7 +23,7 @@
                 <span class="item-note">{{ analytics.ConversationsLogged }}</span>
             </ion-item>
             <ion-item>Total Conversation Time:
-                <span class="item-note">{{ analytics.ConversationTime }}</span>
+                </span><span class="item-note">{{ analytics.ConversationMinutes }}:<span ng-if="analytics.ConversationSeconds < 10">0</span>{{ analytics.ConversationSeconds }}</span>
             </ion-item>
         </ion-list>
     </ion-content>

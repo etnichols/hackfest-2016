@@ -162,11 +162,41 @@ angular.module('app.controllers', ['ngOpenFB'])
                 disableBack: true
             });
             $("#convProgressText").val("");
+
+            var minutesLabel = document.getElementById("minutes");
+            var secondsLabel = document.getElementById("seconds");
+            var totalSeconds = 0;
+            $scope.timer = setInterval(setTime, 1000);
+
+            function setTime()
+            {
+                ++totalSeconds;
+                secondsLabel.innerHTML = pad(totalSeconds%60);
+                $scope.tempConvSecs = secondsLabel.innerHTML;
+                minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+                $scope.tempConvMins = minutesLabel.innerHTML;
+            }
+
+            function pad(val)
+            {
+                var valString = val + "";
+                if(valString.length < 2)
+                {
+                    return "0" + valString;
+                }
+                else
+                {
+                    return valString;
+                }
+            }
         }
     });
 
     $scope.saveTempConv = function(conversation) {
-        dataBase.tempConversation = conversation;
+        dataBase.tempConversation.tempConversation = conversation;
+        dataBase.tempConversation.tempConvMins = $scope.tempConvMins;
+        dataBase.tempConversation.tempConvSecs = $scope.tempConvSecs;
+        clearInterval($scope.timer);
         $state.go("tabsController.conversationEnded");
     }
 })
@@ -185,7 +215,7 @@ angular.module('app.controllers', ['ngOpenFB'])
     // Same conversation from form data and alert user of success
     $scope.saveConversation = function(conversation) {
         if(conversation.ChildId && conversation.Name) {
-            createConversation(dataBase, conversation.ChildId, $scope.tempConv, conversation.Name, 10000);
+            createConversation(dataBase, conversation.ChildId, $scope.tempConv, conversation.Name);
 
             var alertPopup = $ionicPopup.alert({
                 title: "Conversation saved!"
@@ -199,70 +229,75 @@ angular.module('app.controllers', ['ngOpenFB'])
     }
 })
 .controller('settingsCtrl', function ($scope, dataBase, $rootScope, $state, $ionicHistory, $ionicPopup) {
-    if(validateUser($rootScope, $state)) {
-        $scope.user = $rootScope.user;
-        $scope.settings = {};
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+            $scope.user = $rootScope.user;
+            $scope.settings = {};
 
-        $scope.logout = function() {
-            $ionicHistory.clearHistory();
-            $rootScope.user = null;
-            $state.go("login");
-        }
+            $scope.logout = function() {
+                $ionicHistory.clearHistory();
+                $rootScope.user = null;
+                $state.go("login");
+            }
 
-        $scope.cancel = function() {
-            $ionicHistory.goBack();
-        }
+            $scope.cancel = function() {
+                $state.go("tabsController.startConversation");
+            }
 
-        $scope.changePassword = function() {
-            // An elaborate, custom popup
-            var passwordPopup = $ionicPopup.show({
-                template: '<input type="password" ng-model="settings.password">',
-                title: 'Change password',
-                subTitle: 'Please enter your new password',
-                scope: $scope,
-                buttons: [
-                    { text: 'Cancel' },
-                    {
-                        text: '<b>Save</b>',
-                        type: 'button-positive',
-                        onTap: function(e) {
-                            if (!$scope.settings.password) {
-                                //don't allow the user to close unless he enters wifi password
-                                e.preventDefault();
-                            } else {
-                                $scope.user.Password = $scope.settings.password;
-                                $scope.showAlert("Password updated!");
+            $scope.changePassword = function() {
+                // An elaborate, custom popup
+                var passwordPopup = $ionicPopup.show({
+                    template: '<input type="password" ng-model="settings.password">',
+                    title: 'Change password',
+                    subTitle: 'Please enter your new password',
+                    scope: $scope,
+                    buttons: [
+                        { text: 'Cancel' },
+                        {
+                            text: '<b>Save</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                if (!$scope.settings.password) {
+                                    //don't allow the user to close unless he enters wifi password
+                                    e.preventDefault();
+                                } else {
+                                    $scope.user.Password = $scope.settings.password;
+                                    $scope.showAlert("Password updated!");
+                                }
                             }
                         }
-                    }
-                ]
-            });
+                    ]
+                });
 
-            passwordPopup.then(function(res) {
-            });
-        };
+                passwordPopup.then(function(res) {
+                });
+            };
 
-        $scope.saveChanges = function() {
-            if($scope.settings.Name) {
-                $scope.user.Name = $scope.settings.Name;
+            $scope.saveChanges = function() {
+                if($scope.settings.Name) {
+                    $scope.user.Name = $scope.settings.Name;
+                }
+                if($scope.settings.Email) {
+                    $scope.user.Email = $scope.settings.Email;
+                }
+
+                $scope.showAlert("Information updated!");
             }
-            if($scope.settings.Email) {
-                $scope.user.Email = $scope.settings.Email;
+
+            $scope.showAlert = function(title) {
+                var alertPopup = $ionicPopup.alert({
+                    title: title
+                });
+
+                alertPopup.then(function(res) {
+                    $state.go("tabsController.startConversation");
+                });
             }
-
-            $scope.showAlert("Information updated!");
         }
-
-        $scope.showAlert = function(title) {
-            var alertPopup = $ionicPopup.alert({
-                title: title
-            });
-
-            alertPopup.then(function(res) {
-                $ionicHistory.goBack();
-            });
-        }
-    }
+    });
 
     $("#settingsName, #settingsEmail").on("input", function() {
         $("#settingsSaveButton").removeAttr("disabled");
@@ -605,7 +640,8 @@ function addChild(dataBase, userId, name, birthDay, imgPath) {
         ChildId: tempId,
         TotalWords: 0,
         LongestWord: "",
-        ConversationTime: 0,
+        ConversationMinutes: 0,
+        ConversationSeconds: 0,
         ConversationsLogged: 0
     };
 
@@ -661,7 +697,7 @@ function getChildById(children, childId) {
  * @param birthDay - the birthday of the child to be added
  * @param imgPath  - the path of the profile image of the child to be added
  */
-function createConversation(dataBase, childId, transcript, name, convTime) {
+function createConversation(dataBase, childId, tempConv, name) {
     var now = new Date();
     var tempId = 1;
 
@@ -672,8 +708,8 @@ function createConversation(dataBase, childId, transcript, name, convTime) {
     });
 
     // Parse transcript for words
-    var parsedTranscript = transcript.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-    parsedTranscript = transcript.replace(/\s{2,}/g," ");
+    var parsedTranscript = tempConv.tempConversation.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    parsedTranscript = parsedTranscript.replace(/\s{2,}/g," ");
 
     var words = parsedTranscript.split(" ").slice().sort(),
         analytics = getAnalyticsByChildId(dataBase.Analytics, childId),
@@ -709,19 +745,29 @@ function createConversation(dataBase, childId, transcript, name, convTime) {
     }
 
     analytics.ConversationsLogged++;
-    analytics.ConversationTime += convTime;
+    mins = parseInt(tempConv.tempConvMins) + parseInt(analytics.ConversationMinutes);
+    secs = parseInt(tempConv.tempConvSecs) + parseInt(analytics.ConversationSeconds);
+
+    while(secs >= 60) {
+        mins++;
+        secs -= 60;
+    }
+
+    analytics.ConversationMinutes = mins < 10 ? "0" + mins : mins;
+    analytics.ConversationSeconds = secs < 10 ? "0" + secs : secs;
 
     // Create and add the object
     var conv =
     {
         ConversationId: tempId,
         ChildId: childId,
-        Conversation: transcript,
+        Conversation: tempConv.tempConversation,
         UniqueWords: uniqueWords,
         LongestWord: longestWord,
         Name: name,
         Date: now,
-        ConversationTime: convTime
+        ConversationMinutes: parseInt(tempConv.tempConvMins),
+        ConversationSeconds: parseInt(tempConv.tempConvSecs)
     };
 
     dataBase.Conversations.push(conv);

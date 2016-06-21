@@ -10,8 +10,8 @@ angular.module('app.services', [])
             Email: "Eddard.Stark@gmail.com",
             UserName: "EStark",
             Password: "EStark1",
-            CreatedAt: "2012-04-23T18:25:43.511Z",
-            UpdatedAt: "2013-06-14T13:42:43.823Z",
+            CreatedAt: "2012-04-23",
+            UpdatedAt: "2013-06-14",
             Enabled: "True"
         },{
             UserId: 2,
@@ -19,8 +19,8 @@ angular.module('app.services', [])
             Email: "Cersei.Lannister@gmail.com",
             UserName: "c",
             Password: "c",
-            CreatedAt: "2011-01-17T10:01:32.421Z",
-            UpdatedAt: "2014-12-11T12:35:26.938Z",
+            CreatedAt: "2011-01-17",
+            UpdatedAt: "2014-12-11",
             Enabled: "True"
         }
     ];
@@ -33,32 +33,32 @@ angular.module('app.services', [])
             Name: "John",
             BirthDay: "2012-06-14T00:00:00.000Z",
             ImgPath: "img/john-snow-profile.jpg",
-            CreatedAt: "2014-02-17T17:25:43.514Z",
-            UpdatedAt: "2015-07-18T09:23:41.763Z"
+            CreatedAt: "2012-06-27",
+            UpdatedAt: "2015-07-18"
         },{
             ChildId: 21,
             ParentId: 2,
             Name: "Joffrey",
             BirthDay: "2014-11-23T00:00:00.000Z",
             ImgPath: "img/joffrey-profile.jpg",
-            CreatedAt: "2014-11-28T14:15:43.514Z",
-            UpdatedAt: "2015-01-02T12:23:41.763Z"
+            CreatedAt: "2013-11-28",
+            UpdatedAt: "2015-01-02"
         },{
             ChildId: 12,
             ParentId: 1,
             Name: "Sansa",
             BirthDay: "2010-04-02T00:00:00.000Z",
             ImgPath: "img/sansa-profile.jpg",
-            CreatedAt: "2011-03-24T02:14:23.514Z",
-            UpdatedAt: "2013-12-18T21:52:42.763Z"
+            CreatedAt: "2011-03-24",
+            UpdatedAt: "2013-12-18"
         },{
             ChildId: 22,
             ParentId: 2,
             Name: "Tommen",
             BirthDay: "2015-03-24T00:00:00.000Z",
             ImgPath: "img/tommen-profile.jpg",
-            CreatedAt: "2015-05-11T14:42:43.514Z",
-            UpdatedAt: "2015-08-12T16:04:41.763Z"
+            CreatedAt: "2015-05-11",
+            UpdatedAt: "2015-08-12"
         }
     ];
 
@@ -71,8 +71,9 @@ angular.module('app.services', [])
             UniqueWords: 10,
             LongestWord: 'winter',
             Name: 'First day of school',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 30000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 32
         },{
             ConversationId: 111,
             ChildId: 11,
@@ -80,8 +81,9 @@ angular.module('app.services', [])
             UniqueWords: 12,
             LongestWord: 'still',
             Name: 'First day of school',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 40000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 17
         },{
             ConversationId: 211,
             ChildId: 21,
@@ -89,8 +91,9 @@ angular.module('app.services', [])
             UniqueWords: 16,
             LongestWord: 'greatest',
             Name: 'First day of school',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 150000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 12
         },{
             ConversationId: 221,
             ChildId: 22,
@@ -98,8 +101,9 @@ angular.module('app.services', [])
             UniqueWords: 13,
             LongestWord: 'follow',
             Name: '',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 60000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 48
         },{
             ConversationId: 112,
             ChildId: 11,
@@ -107,8 +111,9 @@ angular.module('app.services', [])
             UniqueWords: 8,
             LongestWord: 'definitely',
             Name: '',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 20000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 9
         },{
             ConversationId: 212,
             ChildId: 21,
@@ -116,8 +121,9 @@ angular.module('app.services', [])
             UniqueWords: 5,
             LongestWord: 'maybe',
             Name: '',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 10000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 4
         },{
             ConversationId: 213,
             ChildId: 21,
@@ -125,8 +131,9 @@ angular.module('app.services', [])
             UniqueWords: 8,
             LongestWord: 'everyone',
             Name: '',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 40000
+            Date: "2015-05-11",
+            ConversationMinutes: 0,
+            ConversationSeconds: 50
         },{
             ConversationId: 122,
             ChildId: 12,
@@ -134,12 +141,18 @@ angular.module('app.services', [])
             UniqueWords: 9,
             LongestWord: 'situation',
             Name: '',
-            Date: "2015-05-11T14:42:43.514Z",
-            ConversationTime: 70000
+            Date: "2015-05-11",
+            ConversationMinutes: 1,
+            ConversationSeconds: 0
         }
     ];
 
-    dataBase.tempConversation = "";
+    dataBase.tempConversation =
+    {
+        tempConversation: "",
+        tempConvMins: 0,
+        tempConvSecs: 0
+    };
     
     dataBase.Analytics =
     [
@@ -148,28 +161,32 @@ angular.module('app.services', [])
             ChildId: 11,
             TotalWords: 20,
             LongestWord: "definitely",
-            ConversationTime: 60000,
+            ConversationMinutes: 0,
+            ConversationSeconds: 26,
             ConversationsLogged: 2
         },{
             AnalyticsId: 28374,
             ChildId: 21,
             TotalWords: 24,
             LongestWord: "greatest",
-            ConversationTime: 200000,
+            ConversationMinutes: 1,
+            ConversationSeconds: 6,
             ConversationsLogged: 3
         },{
             AnalyticsId: 85849,
             ChildId: 12,
             TotalWords: 19,
             LongestWord: "situation",
-            ConversationTime: 100000,
+            ConversationMinutes: 1,
+            ConversationSeconds: 32,
             ConversationsLogged: 2
         },{
             AnalyticsId: 34832,
             ChildId: 22,
             TotalWords: 13,
             LongestWord: "follow",
-            ConversationTime: 60000,
+            ConversationMinutes: 0,
+            ConversationSeconds: 48,
             ConversationsLogged: 1
         }
     ];

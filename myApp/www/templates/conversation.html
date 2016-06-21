@@ -8,6 +8,10 @@
             <ion-item>Longest Word Spoken:
                 <span class="item-note">{{ conversation.LongestWord }}</span>
             </ion-item>
+
+            <ion-item>Conversation Time:
+                <span class="item-note">{{ conversation.ConversationMinutes }}:<span ng-if="conversation.ConversationSeconds < 10">0</span>{{ conversation.ConversationSeconds }}</span>
+            </ion-item>
             
             <div class="padding">
                 <h4>Transcript:</h4>

@@ -1,7 +1,7 @@
 <ion-view title="My Collections" id="page8">
   <ion-content padding="true" class="has-header">
     <div class="list">
-      <a class="item item-avatar" ng-repeat="child in children" ui-sref="tabsController.myCollections({ childId: '{{ child.ChildId }}' })">
+      <a class="item item-avatar" ng-repeat="child in children" ui-sref="tabsController.myCollectionsChild({ childId: '{{ child.ChildId }}' })">
         <img ng-src="{{ child.ImgPath }}" />
         <h2>{{ child.Name }}</h2>
         <p>Last updated: {{ child.UpdatedAt | date:'medium' }}</p>

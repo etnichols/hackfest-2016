@@ -46,6 +46,15 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+  .state('tabsController.delChild', {
+      url: '/page2',
+      views: {
+        'tab1': {
+          templateUrl: 'templates/deleteChild.html',
+          controller: 'delChildCtrl'
+        }
+      }
+    })
   .state('tabsController.collectionsChild', {
     url:'/page3/:childId',
     views: {

@@ -1,0 +1,21 @@
+<ion-view title="Delete Child" id="deleteChild" class=" ">
+  <ion-content padding="false" class="has-header">
+    <h3 id="deleteChild-heading3" style="color:#000000;text-align:center;" class="padding">Delete A Child</h3>
+    <form id="deleteChild-form" class="list">
+      <div class="list">
+        <div class="item item-divider">
+          Select child
+        </div>
+        <ion-radio ng-repeat="child in children" ng-model="child.ChildId" class="item item-avatar" required name="childRadio">
+          <img ng-src="{{ child.ImgPath }}" />
+          {{ child.Name }}
+        </ion-radio>
+        <div class="item item-divider"></div>
+      </div>
+      <div class="padding">
+        <a ng-click="delChild(child)" id="deleteChild-button" style="border-radius:5px 5px 5px 5px;" class="button button-positive button-small button-block ">Delete Child</a>
+        <a ui-sref="tabsController.collections" id="delChild-button" style="border-radius:5px 5px 5px 5px;" class="button button-assertive button-small button-block ">Cancel</a>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

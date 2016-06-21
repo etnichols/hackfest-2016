@@ -80,6 +80,21 @@ angular.module('app.controllers', ['ngOpenFB'])
         });
     };
 })
+.controller('delChildCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup) {
+    if(validateUser($rootScope, $state)) {
+      $scope.children = getChildren(dataBase, $rootScope.user.UserId);
+      $scope.child = {};
+      $scope.delChild = function(child) {
+          deleteChild(dataBase, child.ChildId);
+
+          var alertPopup = $ionicPopup.alert({
+              title: 'Child deleted!'
+          });
+
+          $state.go("tabsController.collections");
+      };
+    }
+})
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -99,7 +114,6 @@ angular.module('app.controllers', ['ngOpenFB'])
     if(validateUser($rootScope, $state)) {
         $scope.addChild = function(child) {
             addChild(dataBase, $rootScope.user.UserId, child.name, child.birthday, "");
-            
             var alertPopup = $ionicPopup.alert({
                 title: 'Child created!'
             });
@@ -787,7 +801,7 @@ function addWordToWordBank(wordbank, childId, word) {
                     childWord.Count++;
                     exit = true;
                 }
-                
+
                 return exit;
             });
 
@@ -811,7 +825,7 @@ function addWordToWordBank(wordbank, childId, word) {
 
     // Word doesn't exist in database
     if(!exit) {
-        var wrd = 
+        var wrd =
         {
             WordBankId: tempId,
             ChildUse:

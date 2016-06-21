@@ -138,6 +138,8 @@ angular.module('app.services', [])
             ConversationTime: 70000
         }
     ];
+
+    dataBase.tempConversation = "";
     
     dataBase.Analytics =
     [
@@ -145,28 +147,28 @@ angular.module('app.services', [])
             AnalyticsId: 29384,
             ChildId: 11,
             TotalWords: 20,
-            LongestWords: "definitely",
+            LongestWord: "definitely",
             ConversationTime: 60000,
             ConversationsLogged: 2
         },{
             AnalyticsId: 28374,
             ChildId: 21,
             TotalWords: 24,
-            LongestWords: "greatest",
+            LongestWord: "greatest",
             ConversationTime: 200000,
             ConversationsLogged: 3
         },{
             AnalyticsId: 85849,
             ChildId: 12,
             TotalWords: 19,
-            LongestWords: "situation",
+            LongestWord: "situation",
             ConversationTime: 100000,
             ConversationsLogged: 2
         },{
             AnalyticsId: 34832,
             ChildId: 22,
             TotalWords: 13,
-            LongestWords: "follow",
+            LongestWord: "follow",
             ConversationTime: 60000,
             ConversationsLogged: 1
         }
@@ -192,7 +194,7 @@ angular.module('app.services', [])
                 Created: "2015-07-10"
               }
             ],
-            Word: "I"
+            Word: "i"
         },{
             WordBankId: 2,
             ChildUse:
@@ -845,7 +847,7 @@ angular.module('app.services', [])
                 Created: "2015-07-10"
               }
             ],
-            Word: "I'm"
+            Word: "i'm"
         },{
             WordBankId: 57,
             ChildUse:

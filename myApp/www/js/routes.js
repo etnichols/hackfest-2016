@@ -76,7 +76,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
   .state('tabsController.conversationInProgress', {
-    url: '/page5',
+    url: '/page6',
     views: {
       'tab2': {
         templateUrl: 'templates/conversationInProgress.html',
@@ -94,7 +94,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
   .state('tabsController.settings', {
-    url: '/page9',
+    url: '/page8',
     views: {
       'tab2': {
         templateUrl: 'templates/settings.html',
@@ -105,7 +105,7 @@ angular.module('app.routes', ['ionicUIRouter'])
 
   // Analytics (tab 3)
   .state('tabsController.analytics', {
-    url: '/page10',
+    url: '/page9',
     views: {
       'tab3': {
         templateUrl: 'templates/analytics.html',
@@ -114,7 +114,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
   .state('tabsController.analyticsChild', {
-    url: '/page11/:childId',
+    url: '/page10/:childId',
     views: {
       'tab3': {
         templateUrl: 'templates/analytics.child.html',

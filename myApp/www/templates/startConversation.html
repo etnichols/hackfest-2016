@@ -1,10 +1,16 @@
 <ion-view title="Start a Conversation" id="page3" class=" ">
     <ion-content padding="true" class="has-header">
-        <div class="spacer" style="width: 300px; height: 17px;"></div>
+        <br>
         <h1 id="startAConversation-heading1" style="color:#000000;text-align:center;" class=" ">Welcome</h1>
+        <br>
         <p id="startAConversation-markdown1" style="color:#000000;font-size:16px;text-align:center;" class=" ">Start a conversation</p>
-        <center><a ui-sref="tabsController.conversationInProgress" id="startAConversation-button8" style="text-align:justify;border-radius:5px 5px 5px 5px;" class=" button button-assertive button-large ">Record</a></center>
-        <div class="spacer" style="width: 300px; height: 12px;"></div>
-        <a ui-sref="tabsController.settings" id="startAConversation-button14" style="border-radius:5px 5px 5px 5px;" class=" button button-stable button-small button-block ">Settings</a>
+        <br>
+        <br>
+        <a class="button button-float button-assertive" ui-sref="tabsController.conversationInProgress">
+            <span class="icon ion-android-microphone"></span>
+        </a>
+        <br>
+        <br>
+        <a ui-sref="tabsController.settings" id="startAConversation-button14" style="border-radius:5px 5px 5px 5px;" class=" button button-positive button-small button-block ">Settings</a>
     </ion-content>
 </ion-view>

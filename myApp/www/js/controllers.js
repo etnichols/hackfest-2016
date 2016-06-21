@@ -98,8 +98,8 @@ angular.module('app.controllers', ['ngOpenFB'])
 .controller('addChildCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup) {
     if(validateUser($rootScope, $state)) {
         $scope.addChild = function(child) {
-            addChild(dataBase.Children, $rootScope.user.UserId, child.name, child.birthday, "");
-
+            addChild(dataBase, $rootScope.user.UserId, child.name, child.birthday, "");
+            
             var alertPopup = $ionicPopup.alert({
                 title: 'Child created!'
             });
@@ -121,14 +121,7 @@ angular.module('app.controllers', ['ngOpenFB'])
 .controller('conversationCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
     $scope.$on('$ionicView.enter', function() {
         if(validateUser($rootScope, $state)) {
-            console.log($stateParams.conversationId);
             $scope.conversation = getConversationById(dataBase.Conversations, $stateParams.conversationId);
-
-            console.log($scope.conversation);
-        }
-
-        $scope.updateTranscript = function() {
-            $("#conv-transcript").css("height", $("#conv-transcript").scrollHeight + "px");
         }
     });
 })
@@ -139,19 +132,56 @@ angular.module('app.controllers', ['ngOpenFB'])
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-.controller('startConversationCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
+.controller('startConversationCtrl', function ($scope, $rootScope, $state, $ionicHistory) {
+     $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+        }
+    });
+})
+.controller('conversationInProgressCtrl', function ($scope, dataBase, $rootScope, $state, $ionicHistory) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+            $("#convProgressText").val("");
+        }
+    });
 
+    $scope.saveTempConv = function(conversation) {
+        dataBase.tempConversation = conversation;
+        $state.go("tabsController.conversationEnded");
     }
 })
-.controller('conversationInProgressCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
+.controller('conversationEndedCtrl', function ($scope, dataBase, $rootScope, $state, $ionicHistory, $ionicPopup) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+            $scope.children = getChildren(dataBase, $rootScope.user.UserId);
+            $scope.conv = {};
+            $scope.tempConv = dataBase.tempConversation;
+        }
+    });
 
-    }
-})
-.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
+    // Same conversation from form data and alert user of success
+    $scope.saveConversation = function(conversation) {
+        if(conversation.ChildId && conversation.Name) {
+            createConversation(dataBase, conversation.ChildId, $scope.tempConv, conversation.Name, 10000);
 
+            var alertPopup = $ionicPopup.alert({
+                title: "Conversation saved!"
+            });
+
+            alertPopup.then(function(res) {
+                $state.go("tabsController.startConversation");
+                $ionicHistory.clearHistory();
+            });
+        }
     }
 })
 .controller('settingsCtrl', function ($scope, dataBase, $rootScope, $state, $ionicHistory, $ionicPopup) {
@@ -256,6 +286,7 @@ angular.module('app.controllers', ['ngOpenFB'])
 
             var yearStart = 2011;
             var dataSize = 6;
+            var wordsKnown = 0;
 
             for(var i = 0; i < dataSize; i++) {
                 labels.push(yearStart + i);
@@ -275,11 +306,15 @@ angular.module('app.controllers', ['ngOpenFB'])
                         if(yearLearned >= yearStart && yearLearned <= yearStart + dataSize) {
                             data[yearLearned - yearStart]++;
                         }
+
+                        wordsKnown++;
+
                         return true;
                     }
                 });
             });
 
+            $scope.analytics.TotalWords = wordsKnown;
             $scope.labels = labels;
             $scope.data = [data];
         }
@@ -515,11 +550,11 @@ function getUserByLogin(users, userName, password) {
  * @param birthDay - the birthday of the child to be added
  * @param imgPath  - the path of the profile image of the child to be added
  */
-function addChild(children, userId, name, birthDay, imgPath) {
+function addChild(dataBase, userId, name, birthDay, imgPath) {
     var now = new Date();
     var tempId = 1;
 
-    children.some(function (child) {
+    dataBase.Children.some(function (child) {
         if (child.ChildId >= tempId) {
             tempId = child.ChildId + 1;
         }
@@ -540,7 +575,27 @@ function addChild(children, userId, name, birthDay, imgPath) {
         UpdatedAt: now
     };
 
-    children.push(chld);
+    dataBase.Children.push(chld);
+
+    var tempAnalyticId = 0;
+
+    dataBase.Analytics.some(function (analytic) {
+        if (analytic.AnalyticsId >= tempAnalyticId) {
+            tempAnalyticId = analytic.AnalyticsId + 1;
+        }
+    });
+
+    var analytic =
+    {
+        AnalyticsId: tempAnalyticId,
+        ChildId: tempId,
+        TotalWords: 0,
+        LongestWord: "",
+        ConversationTime: 0,
+        ConversationsLogged: 0
+    };
+
+    dataBase.Analytics.push(analytic);
 }
 
 /**
@@ -582,6 +637,81 @@ function getChildById(children, childId) {
         }
     });
     return childObj;
+}
+
+/**
+ * Adds a new child to the database
+ * @param children - the children JSON object in the database service
+ * @param userId   - the userId of the parent of this child
+ * @param name     - the name of the child to be added
+ * @param birthDay - the birthday of the child to be added
+ * @param imgPath  - the path of the profile image of the child to be added
+ */
+function createConversation(dataBase, childId, transcript, name, convTime) {
+    var now = new Date();
+    var tempId = 1;
+
+    dataBase.Conversations.some(function (conv) {
+        if (conv.ConversationId >= tempId) {
+            tempId = conv.ConversationId + 1;
+        }
+    });
+
+    // Parse transcript for words
+    var parsedTranscript = transcript.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    parsedTranscript = transcript.replace(/\s{2,}/g," ");
+
+    var words = parsedTranscript.split(" ").slice().sort(),
+        analytics = getAnalyticsByChildId(dataBase.Analytics, childId),
+        longestWord = words[0],
+        uniqueWords = 0;
+
+    for(var i = 0; i < words.length - 1; i++) {
+        if(words[i + 1] != words[i]) {
+            uniqueWords++;
+            if(i + 1 == words.length - 1) {
+                uniqueWords++;
+            }
+        }
+    }
+
+    if(words.length == 1) {
+        uniqueWords = 1;
+    }
+
+    for(var i = 0; i < words.length; i++) {
+        words[i] = words[i].toLowerCase();
+
+        if(words[i].length > longestWord.length) {
+            longestWord = words[i];
+        }
+
+        addWordToWordBank(dataBase.WordBank, childId, words[i]);
+    }
+
+    // Update analytics
+    if(longestWord.length > analytics.LongestWord.length) {
+        analytics.LongestWord = longestWord;
+    }
+
+    analytics.ConversationsLogged++;
+    analytics.ConversationTime += convTime;
+
+    // Create and add the object
+    var conv =
+    {
+        ConversationId: tempId,
+        ChildId: childId,
+        Conversation: transcript,
+        UniqueWords: uniqueWords,
+        LongestWord: longestWord,
+        Name: name,
+        Date: now,
+        ConversationTime: convTime
+    };
+
+    dataBase.Conversations.push(conv);
+    getChildById(dataBase.Children, childId).UpdatedAt = now;
 }
 
 /**
@@ -635,4 +765,65 @@ function getAnalyticsByChildId(analytics, childId) {
         }
     });
     return analyticsObj;
+}
+
+/**
+ * Adds a new child to the database
+ * @param children - the children JSON object in the database service
+ * @param userId   - the userId of the parent of this child
+ * @param name     - the name of the child to be added
+ * @param birthDay - the birthday of the child to be added
+ * @param imgPath  - the path of the profile image of the child to be added
+ */
+function addWordToWordBank(wordbank, childId, word) {
+    var now = new Date(),
+        exit = false,
+        tempId = 0;
+
+    wordbank.some(function (wordBankWord) {
+        if(wordBankWord.Word == word) {
+            wordBankWord.ChildUse.some(function (childWord) {
+                if(childWord.ChildId == childId) {
+                    childWord.Count++;
+                    exit = true;
+                }
+                
+                return exit;
+            });
+
+            if(!exit) {
+                var chldUse =
+                {
+                    ChildId: childId,
+                    Count: 1,
+                    Created: now
+                };
+                wordBankWord.ChildUse.push(chldUse);
+                exit = true;
+            }
+        }
+        if(wordBankWord.WordBankId > tempId) {
+            tempId = wordBankWord.WordBankId;
+        }
+
+        return exit;
+    });
+
+    // Word doesn't exist in database
+    if(!exit) {
+        var wrd = 
+        {
+            WordBankId: tempId,
+            ChildUse:
+            [
+              {
+                ChildId: childId,
+                Count: 1,
+                Created: now
+              }
+            ],
+            Word: word
+        };
+        wordbank.push(wrd);
+    }
 }

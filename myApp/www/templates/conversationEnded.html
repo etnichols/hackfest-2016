@@ -1,25 +1,27 @@
 <ion-view title="Conversation Ended" id="page14" class=" ">
-    <ion-content padding="true" class="has-header">
-        <div class="spacer" style="width: 300px; height: 17px;"></div>
-        <h2 id="conversationEnded-heading3" style="color:#000000;text-align:center;" class=" ">Save your Conversation</h2>
-        <form id="conversationEnded-form10" class="list ">
-            <label class="item item-select " id="conversationEnded-select3">
-                <span class="input-label">Select Child</span>
-                <select>
-                    <option>Mojo</option>
-                    <option>Jimmy</option>
-                    <option>Rory</option>
-                </select>
-            </label>
+    <ion-content padding="false" class="has-header">
+        <h3 id="conversationEnded-heading3" style="color:#000000;text-align:center;" class="padding">Save your Conversation</h3>
+        <form id="conversationEnded-form11" class="list">
+            <div class="list">
+                <div class="item item-divider">
+                    Select child
+                </div>
+                <ion-radio ng-repeat="child in children" ng-model="conv.ChildId" ng-value="{{ child.ChildId }}" class="item item-avatar" required name="childRadio">
+                    <img ng-src="{{ child.ImgPath }}" />
+                    {{ child.Name }}
+                </ion-radio>
+                <div class="item item-divider">
+                    Information
+                </div>
+                <label class="item item-input " id="conversationEnded-input10">
+                    <span class="input-label">Name</span>
+                    <input type="text" ng-model="conv.Name" required>
+                </label>
+            </div>
+            <div class="padding">
+                <a ng-click="saveConversation(conv)" id="conversationEnded-button23" style="border-radius:5px 5px 5px 5px;" class="button button-positive button-small button-block ">Save</a>
+                <a ui-sref="tabsController.startConversation" id="conversationEnded-button23" style="border-radius:5px 5px 5px 5px;" class="button button-assertive button-small button-block ">Cancel Conversation</a>
+            </div>
         </form>
-        <form id="conversationEnded-form11" class="list ">
-            <label class="item item-input " id="conversationEnded-input10">
-                <span class="input-label">Optional Conversation Name</span>
-                <input type="text" placeholder="">
-            </label>
-        </form>
-        <!-- TODO: Save conversation in controller & popup confirmation of save -->
-        <a ui-sref="tabsController.startConversation" id="conversationEnded-button23" style="border-radius:5px 5px 5px 5px;" class=" button button-positive button-small button-block ">Save</a>
-        <a ui-sref="tabsController.startConversation" id="conversationEnded-button23" style="border-radius:5px 5px 5px 5px;" class=" button button-assertive button-small button-block ">Cancel Conversation</a>
     </ion-content>
 </ion-view>

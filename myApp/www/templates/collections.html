@@ -7,7 +7,7 @@
             <a class="item item-avatar" ng-repeat="child in children" ui-sref="tabsController.collectionsChild({ childId: '{{ child.ChildId }}' })">
                 <img ng-src="{{ child.ImgPath }}" />
                 <h2>{{ child.Name }}</h2>
-                <p>Last updated: {{ child.UpdatedAt | date:'medium' }}</p>
+                <p>Last updated: {{ child.UpdatedAt | date:'shortDate' }}</p>
             </a>
         </div>
         <div class="padding">

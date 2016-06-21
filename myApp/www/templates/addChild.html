@@ -3,21 +3,14 @@
         <form id="addChild-form5" class="list ">
             <label class="item item-input " id="addChild-input8">
                 <span class="input-label">Name</span>
-                <input type="text" placeholder="">
-            </label>
-            <label class="item item-select " id="addChild-select1" name="Gender">
-                <span class="input-label">Gender</span>
-                <select>
-                    <option>Male</option>
-                    <option>Female</option>
-                </select>
+                <input type="text" placeholder="" ng-model="child.name">
             </label>
             <label class="item item-input " id="addChild-input9">
-                <span class="input-label">Birthdate</span>
-                <input type="date" placeholder="">
+                <span class="input-label">Birthday</span>
+                <input type="date" placeholder="" ng-model="child.birthday">
             </label>
+            <!-- TODO: upload picture with form -->
         </form>
-        <!-- TODO: add child function -->
-        <a ui-sref="tabsController.collections" id="addChild-button11" class=" button button-positive button-small button-block ">Submit</a>
+        <a ng-click="addChild(child)" id="addChild-button10" class=" button button-positive button-small button-block ">Submit</a>
     </ion-content>
 </ion-view>

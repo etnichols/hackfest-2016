@@ -1,11 +1,18 @@
-<ion-view title="*Conversation Title*" id="page16" class=" ">
-    <ion-content padding="true" class="has-header">
-        <ion-list id="ConversationTitle-list10" class=" ">
-            <ion-item id="ConversationTitle-list-item27" class="  ">Longest Word Spoken:
-                <span class="item-note">Pumpernickel</span>
+<ion-view title="{{ conversation.Name }}">
+    <ion-content padding="false" class="has-header">
+        <ion-list>
+            <ion-item>Unique Words
+                <span class="item-note">{{ conversation.UniqueWords }}</span>
             </ion-item>
-            <ion-item id="ConversationTitle-list-item28" class="  ">*Visualizations Here*</ion-item>
+
+            <ion-item>Longest Word Spoken:
+                <span class="item-note">{{ conversation.LongestWord }}</span>
+            </ion-item>
+            
+            <div class="padding">
+                <h4>Transcript:</h4>
+                {{ conversation.Conversation }}
+            </div>
         </ion-list>
-        <a ui-sref="tabsController.collections" id="ConversationTitle-button30" class=" button button-positive button-small button-block ">Back to My Collections</a>
     </ion-content>
 </ion-view>

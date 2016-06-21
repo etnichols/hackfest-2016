@@ -30,7 +30,7 @@ angular.module('app.services', [])
         {
             ChildId: 11,
             ParentId: 1,
-            Name: "John Snow",
+            Name: "John",
             BirthDay: "2012-06-14T00:00:00.000Z",
             ImgPath: "img/john-snow-profile.jpg",
             CreatedAt: "2014-02-17T17:25:43.514Z",
@@ -38,7 +38,7 @@ angular.module('app.services', [])
         },{
             ChildId: 21,
             ParentId: 2,
-            Name: "Joffrey Baratheon",
+            Name: "Joffrey",
             BirthDay: "2014-11-23T00:00:00.000Z",
             ImgPath: "img/joffrey-profile.jpg",
             CreatedAt: "2014-11-28T14:15:43.514Z",
@@ -46,7 +46,7 @@ angular.module('app.services', [])
         },{
             ChildId: 12,
             ParentId: 1,
-            Name: "Sansa Stark",
+            Name: "Sansa",
             BirthDay: "2010-04-02T00:00:00.000Z",
             ImgPath: "img/sansa-profile.jpg",
             CreatedAt: "2011-03-24T02:14:23.514Z",
@@ -54,7 +54,7 @@ angular.module('app.services', [])
         },{
             ChildId: 22,
             ParentId: 2,
-            Name: "Tommen Baratheon",
+            Name: "Tommen",
             BirthDay: "2015-03-24T00:00:00.000Z",
             ImgPath: "img/tommen-profile.jpg",
             CreatedAt: "2015-05-11T14:42:43.514Z",
@@ -67,42 +67,74 @@ angular.module('app.services', [])
         {
             ConversationId: 121,
             ChildId: 12,
-            Conversation: "we will take back our lands winter is coming dad",
+            Conversation: "We will take back our lands winter is coming dad.",
+            UniqueWords: 10,
+            LongestWord: 'winter',
+            Name: 'First day of school',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 30000
         },{
             ConversationId: 111,
             ChildId: 11,
-            Conversation: "i am very cold yet i still feel the need to go north",
+            Conversation: "I am very cold yet I still feel the need to go north.",
+            UniqueWords: 12,
+            LongestWord: 'still',
+            Name: 'First day of school',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 40000
         },{
             ConversationId: 211,
             ChildId: 21,
-            Conversation: "i am the greatest hunter oh my god what is that oh just a squirrel i knew that",
+            Conversation: "I am the greatest hunter oh my god what is that oh just a squirrel I knew that.",
+            UniqueWords: 16,
+            LongestWord: 'greatest',
+            Name: 'First day of school',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 150000
         },{
             ConversationId: 221,
             ChildId: 22,
-            Conversation: "i don't know what to do i want to follow him but i need to help her",
+            Conversation: "I don't know what to do I want to follow him but I need to help her.",
+            UniqueWords: 13,
+            LongestWord: 'follow',
+            Name: '',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 60000
         },{
             ConversationId: 112,
             ChildId: 11,
-            Conversation: "this was a mistake winter is definitely coming",
+            Conversation: "This was a mistake winter is definitely coming.",
+            UniqueWords: 8,
+            LongestWord: 'definitely',
+            Name: '',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 20000
         },{
             ConversationId: 212,
             ChildId: 21,
-            Conversation: "maybe i am a jerk",
+            Conversation: "Maybe I am a jerk.",
+            UniqueWords: 5,
+            LongestWord: 'maybe',
+            Name: '',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 10000
         },{
             ConversationId: 213,
             ChildId: 21,
-            Conversation: "no everyone adores me that can't be right",
+            Conversation: "No everyone adores me that can't be right.",
+            UniqueWords: 8,
+            LongestWord: 'everyone',
+            Name: '',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 40000
         },{
             ConversationId: 122,
             ChildId: 12,
-            Conversation: "i'm not a huge fan of my current situation",
+            Conversation: "I'm not a huge fan of my current situation.",
+            UniqueWords: 9,
+            LongestWord: 'situation',
+            Name: '',
+            Date: "2015-05-11T14:42:43.514Z",
             ConversationTime: 70000
         }
     ];

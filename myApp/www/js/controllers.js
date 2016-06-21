@@ -95,23 +95,42 @@ angular.module('app.controllers', ['ngOpenFB'])
         }
     });
 })
-.controller('addChildCtrl', function ($scope, $rootScope, $state) {
+.controller('addChildCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup) {
     if(validateUser($rootScope, $state)) {
+        $scope.addChild = function(child) {
+            addChild(dataBase.Children, $rootScope.user.UserId, child.name, child.birthday, "");
 
+            var alertPopup = $ionicPopup.alert({
+                title: 'Child created!'
+            });
+
+            $state.go("tabsController.collections");
+        };
     }
 })
-.controller('collectionsChildCtrl', function ($scope, dataBase, $rootScope, $state) {
+.controller('collectionsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
     $scope.$on('$ionicView.enter', function() {
         if(validateUser($rootScope, $state)) {
-            $scope.user = $rootScope.user;
-            $scope.children = getChildren(dataBase, $scope.user.UserId);
+            $scope.child = getChildById(dataBase.Children, $stateParams.childId);
+
+            // Get all conversations
+            $scope.conversations = getConversations(dataBase.Conversations, $scope.child.ChildId);
         }
     });
 })
-.controller('conversationCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
+.controller('conversationCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            console.log($stateParams.conversationId);
+            $scope.conversation = getConversationById(dataBase.Conversations, $stateParams.conversationId);
 
-    }
+            console.log($scope.conversation);
+        }
+
+        $scope.updateTranscript = function() {
+            $("#conv-transcript").css("height", $("#conv-transcript").scrollHeight + "px");
+        }
+    });
 })
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -296,10 +315,9 @@ function validateUser($rootScope, $state) {
  * @param userName - the username of the user to add
  * @param password - the password of the user to add
  *                   TODO: Hash the password in this function or beforehand
- * @param imgPath  - the path to the profile image of the user to add
  * @param enabled  - the state of the users account, true if access is allowed
  */
-function addUser(users, name, email, userName, password, imgPath, enabled) {
+function addUser(users, name, email, userName, password, enabled) {
     var now = new Date();
     var tempId = 1;
 
@@ -316,7 +334,6 @@ function addUser(users, name, email, userName, password, imgPath, enabled) {
         Email: email,
         UserName: userName,
         Password: password, // TODO: Hash the passwords here.
-        ImgPath: imgPath,
         CreatedAt: now,
         UpdatedAt: now,
         Enabled: enabled
@@ -508,6 +525,10 @@ function addChild(children, userId, name, birthDay, imgPath) {
         }
     });
 
+    if(imgPath == "") {
+        imgPath = "img/empty-profile.png";
+    }
+
     var chld =
     {
         ChildId: tempId,
@@ -561,6 +582,42 @@ function getChildById(children, childId) {
         }
     });
     return childObj;
+}
+
+/**
+ * Returns an array of conversations corresponding to a childId
+ * @param  conversations - the conversations JSON object in the database service
+ * @param  childId       - the childId of the converations to be retrieved
+ * @return               - an array of conversations corresponding to this childId
+ */
+function getConversations(conversations, childId) {
+    var convs = [];
+
+    conversations.some(function (conversation) {
+        if(conversation.ChildId == childId) {
+            convs.push(conversation);
+        }
+    });
+
+    return convs;
+}
+
+/**
+ * Returns a conversation object based off of a conversationId
+ * @param  conversations  - the conversations JSON object in the database service
+ * @param  conversationid - the conversationId of the conversation to be retrieved
+ * @return                - the conversation corresponding to conversationId
+ */
+function getConversationById(conversations, conversationId) {
+    var conv;
+
+    conversations.some(function (conversation) {
+        if (conversation.ConversationId == conversationId) {
+            conv = conversation;
+            return true;
+        }
+    });
+    return conv;
 }
 
 /**

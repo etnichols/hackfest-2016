@@ -56,7 +56,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
   .state('tabsController.conversation', {
-    url: '/page4',
+    url: '/page4/:conversationId',
     views: {
       'tab1': {
         templateUrl: 'templates/conversation.html',

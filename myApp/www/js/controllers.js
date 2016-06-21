@@ -18,7 +18,7 @@ angular.module('app.controllers', ['ngOpenFB'])
             $("#login-username-field, #login-password-field").val("");
 
             $ionicHistory.clearHistory();
-            $state.go("tabsController.startAConversation");
+            $state.go("tabsController.startConversation");
         }
         else {
             $scope.showInvalidCredentials();
@@ -49,7 +49,6 @@ angular.module('app.controllers', ['ngOpenFB'])
         }, 3000);
     };
 })
-
 .controller('signupCtrl', function ($scope, dataBase, $rootScope, $state, $ionicPopup) {
     $scope.register = function(user) {
         // Confirm no user with input userName or email exists
@@ -82,6 +81,60 @@ angular.module('app.controllers', ['ngOpenFB'])
     };
 })
 
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Collections controllers (Tab 1)
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.controller('collectionsCtrl', function ($scope, dataBase, $rootScope, $state) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $scope.user = $rootScope.user;
+            $scope.children = getChildren(dataBase, $scope.user.UserId);
+        }
+    });
+})
+.controller('addChildCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+.controller('collectionsChildCtrl', function ($scope, dataBase, $rootScope, $state) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $scope.user = $rootScope.user;
+            $scope.children = getChildren(dataBase, $scope.user.UserId);
+        }
+    });
+})
+.controller('conversationCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+
+////////////////////////////////////////////////////////////////////////////////
+//
+//   Conversations controllers (Tab 2)
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.controller('startConversationCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+.controller('conversationInProgressCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
+.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
+    if(validateUser($rootScope, $state)) {
+
+    }
+})
 .controller('settingsCtrl', function ($scope, dataBase, $rootScope, $state, $ionicHistory, $ionicPopup) {
     if(validateUser($rootScope, $state)) {
         $scope.user = $rootScope.user;
@@ -155,74 +208,7 @@ angular.module('app.controllers', ['ngOpenFB'])
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-//   Conversations controllers
-//
-////////////////////////////////////////////////////////////////////////////////
-
-.controller('NameSConversationsCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('startAConversationCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('ConversationTitleCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('conversationSavedCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-.controller('myCollectionsCtrl', function ($scope, dataBase, $rootScope, $state) {
-    $scope.$on('$ionicView.enter', function() {
-        if(validateUser($rootScope, $state)) {
-            $scope.user = $rootScope.user;
-            $scope.children = getChildren(dataBase, $scope.user.UserId);
-        }
-    });
-})
-
-.controller('myCollectionsChildCtrl', function ($scope, dataBase, $rootScope, $state) {
-    $scope.$on('$ionicView.enter', function() {
-        if(validateUser($rootScope, $state)) {
-            $scope.user = $rootScope.user;
-            $scope.children = getChildren(dataBase, $scope.user.UserId);
-            $state.go("tabsController.NameSConversations.html");
-        }
-    });
-})
-
-.controller('addChildCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
-})
-
-////////////////////////////////////////////////////////////////////////////////
-//
-//   Analytics Controllers
+//   Analytics Controllers (Tab 3)
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -234,7 +220,6 @@ angular.module('app.controllers', ['ngOpenFB'])
         }
     });
 })
-
 .controller('analyticsChildCtrl', function ($scope, dataBase, $stateParams, $rootScope, $state) {
     $scope.$on('$ionicView.enter', function() {
         if(validateUser($rootScope, $state)) {

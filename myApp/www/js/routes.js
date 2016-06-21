@@ -8,57 +8,84 @@ angular.module('app.routes', ['ionicUIRouter'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+  // Main Controller
+  .state('tabsController', {
+    url: '/page1',
+    templateUrl: 'templates/tabsController.html',
+    abstract:true
+  })
 
+  // Login/register controllers
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'loginCtrl'
+  })
+  .state('signup', {
+    url: '/signup',
+    templateUrl: 'templates/signup.html',
+    controller: 'signupCtrl'
+  })
 
-      /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.NameSConversations'
-      2) Using $state.go programatically:
-        $state.go('tabsController.NameSConversations');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page2
-      /page1/tab2/page2
-  */
-  .state('tabsController.NameSConversations', {
+  // Collections (tab 1)
+  .state('tabsController.collections', {
+    url: '/page1',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/collections.html',
+        controller: 'collectionsCtrl'
+      }
+    }
+  })
+  .state('tabsController.addChild', {
     url: '/page2',
     views: {
       'tab1': {
-        templateUrl: 'templates/NameSConversations.html',
-        controller: 'NameSConversationsCtrl'
-      },
-      'tab2': {
-        templateUrl: 'templates/NameSConversations.html',
-        controller: 'NameSConversationsCtrl'
+        templateUrl: 'templates/addChild.html',
+        controller: 'addChildCtrl'
+      }
+    }
+  })
+  .state('tabsController.collectionsChild', {
+    url:'/page3/:childId',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/collections.child.html',
+        controller: 'collectionsChildCtrl'
+      }
+    }
+  })
+  .state('tabsController.conversation', {
+    url: '/page4',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/conversation.html',
+        controller: 'conversationCtrl'
       }
     }
   })
 
-  .state('tabsController.startAConversation', {
-    url: '/page3',
+  // Main Page (tab 2)
+  .state('tabsController.startConversation', {
+    url: '/page5',
     views: {
       'tab2': {
-        templateUrl: 'templates/startAConversation.html',
-        controller: 'startAConversationCtrl'
+        templateUrl: 'templates/startConversation.html',
+        controller: 'startConversationCtrl'
       }
     }
   })
-
-  .state('tabsController.conversationStarted', {
-    url: '/page11',
+  .state('tabsController.conversationInProgress', {
+    url: '/page5',
     views: {
       'tab2': {
-        templateUrl: 'templates/conversationStarted.html',
-        controller: 'conversationStartedCtrl'
+        templateUrl: 'templates/conversationInProgress.html',
+        controller: 'conversationInProgressCtrl'
       }
     }
   })
-
   .state('tabsController.conversationEnded', {
-    url: '/page14',
+    url: '/page7',
     views: {
       'tab2': {
         templateUrl: 'templates/conversationEnded.html',
@@ -66,126 +93,8 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
-
-  .state('tabsController.conversationSaved', {
-    url: '/page15',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/conversationSaved.html',
-        controller: 'conversationSavedCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.analytics', {
-    url: '/page4',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/analytics.html',
-        controller: 'analyticsCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.analyticsChild', {
-    url: '/page13/:childId',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/analytics.child.html',
-        controller: 'analyticsChildCtrl',
-
-      }
-    }
-  })
-
-  .state('tabsController', {
-    url: '/page1',
-    templateUrl: 'templates/tabsController.html',
-    abstract:true
-  })
-
-  .state('login', {
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'
-  })
-
-  .state('signup', {
-    url: '/signup',
-    templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
-  })
-
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.myCollections'
-      2) Using $state.go programatically:
-        $state.go('tabsController.myCollections');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page8
-      /page1/tab2/page8
-  */
-  .state('tabsController.myCollections', {
-    url: '/page8',
-    views: {
-      'tab1': {
-        templateUrl: 'templates/myCollections.html',
-        controller: 'myCollectionsCtrl'
-      },
-      'tab2': {
-        templateUrl: 'templates/myCollections.html',
-        controller: 'myCollectionsCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.myCollectionsChild', {
-      url: '/page8',
-      views: {
-        'tab1': {
-          templateUrl: 'templates/NameSConversations.html',
-          controller: 'myCollectionsChildCtrl'
-        },
-        'tab2': {
-          templateUrl: 'templates/NameSConversations.html',
-          controller: 'myCollectionsChildCtrl'
-        }
-      }
-    })
-
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.addChild'
-      2) Using $state.go programatically:
-        $state.go('tabsController.addChild');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page9
-      /page1/tab2/page9
-  */
-  .state('tabsController.addChild', {
-    url: '/page9',
-    views: {
-      'tab1': {
-        templateUrl: 'templates/addChild.html',
-        controller: 'addChildCtrl'
-      },
-      'tab2': {
-        templateUrl: 'templates/addChild.html',
-        controller: 'addChildCtrl'
-      }
-    }
-  })
-
   .state('tabsController.settings', {
-    url: '/page12',
+    url: '/page9',
     views: {
       'tab2': {
         templateUrl: 'templates/settings.html',
@@ -194,32 +103,25 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.ConversationTitle'
-      2) Using $state.go programatically:
-        $state.go('tabsController.ConversationTitle');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page16
-      /page1/tab2/page16
-  */
-  .state('tabsController.ConversationTitle', {
-    url: '/page16',
+  // Analytics (tab 3)
+  .state('tabsController.analytics', {
+    url: '/page10',
     views: {
-      'tab1': {
-        templateUrl: 'templates/ConversationTitle.html',
-        controller: 'ConversationTitleCtrl'
-      },
-      'tab2': {
-        templateUrl: 'templates/ConversationTitle.html',
-        controller: 'ConversationTitleCtrl'
+      'tab3': {
+        templateUrl: 'templates/analytics.html',
+        controller: 'analyticsCtrl'
+      }
+    }
+  })
+  .state('tabsController.analyticsChild', {
+    url: '/page11/:childId',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/analytics.child.html',
+        controller: 'analyticsChildCtrl',
       }
     }
   })
 
-$urlRouterProvider.otherwise('/page1/page3')
+  $urlRouterProvider.otherwise('/page1/page5')
 });

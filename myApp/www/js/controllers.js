@@ -195,10 +195,13 @@ angular.module('app.controllers', ['ngOpenFB'])
     }
 })
 
-.controller('myCollectionsCtrl', function ($scope, $rootScope, $state) {
-    if(validateUser($rootScope, $state)) {
-
-    }
+.controller('myCollectionsCtrl', function ($scope, dataBase, $rootScope, $state) {
+    $scope.$on('$ionicView.enter', function() {
+        if(validateUser($rootScope, $state)) {
+            $scope.user = $rootScope.user;
+            $scope.children = getChildren(dataBase, $scope.user.UserId);
+        }
+    });
 })
 
 .controller('addChildCtrl', function ($scope, $rootScope, $state) {

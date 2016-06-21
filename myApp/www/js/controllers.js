@@ -107,10 +107,58 @@ angular.module('app.controllers', [])
 .controller('conversationStartedCtrl', function ($scope, $rootScope, $state) {
     if(validateUser($rootScope, $state)) {
         console.log("Validated Users HERE!");
-    }
-    function onRecordPress(){
-        console.log("Pressed button");
-    }
+    }//end validateUser
+
+    //CREDENTIALS FOR USE
+    // var speech_to_text = watson.speech_to_text({
+    //     username: 'fe366067-e95e-4e3e-88f9-b1ac11bfede0',
+    //     password: 'auZMRx317oxA',
+    //     version: 'v1'
+    // });
+
+    $scope.activateMicrophone = function() {
+        console.log("starting request");
+        var tokenURL = "https://stream.watsonplatform.net/authorization/api/v1/token";
+        var url = "https://stream.watsonplatform.net/text-to-speech/api";
+
+        //Create request object
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET',tokenURL,true);
+        xhr.send();
+        //Get token
+
+        // capture callback
+        var captureSuccess = function(mediaFiles) {
+
+            var tokenURL = "/token";
+            var url = "https://stream.watsonplatform.net/text-to-speech/api";
+
+            //Create request object
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET',url,true,'fe366067-e95e-4e3e-88f9-b1ac11bfede0','auZMRx317oxA');
+            xhr.send();
+            //Get token
+
+            //Set up Request
+
+            //Perform request using mediaFile
+
+            // var i, path, len;
+            // for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+            //     path = mediaFiles[i].fullPath;
+            //     //mediaFiles[i].play();
+            //     // do something interesting with the file
+            // }
+        };
+
+        // capture error callback
+        var captureError = function(error) {
+            navigator.notification.alert('Error code: ' + error.code, null, 'Capture Error');
+        };
+
+        // start audio capture
+        navigator.device.capture.captureAudio(captureSuccess, captureError, {limit:1});
+    };
 })
 
 .controller('conversationEndedCtrl', function ($scope, $rootScope, $state) {
